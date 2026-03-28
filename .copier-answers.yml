@@ -1,6 +1,6 @@
 
 # Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
-_commit: bb09ceb
+_commit: bc12a9f
 _src_path: /home/musicvivireal/code/github.com/codingvivi/42-c_template
 build_system: makefile
 copy_build_to_root: true
