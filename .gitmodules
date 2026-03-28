@@ -1,0 +1,3 @@
+[submodule "external/lib/libft"]
+	path = external/lib/libft
+	url = https://github.com/codingvivi/42-libft

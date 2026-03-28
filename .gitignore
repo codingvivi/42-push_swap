@@ -1,0 +1,19 @@
+# Build & gen
+.cache/
+build/
+*.a
+*.o
+*.out
+CMakeLists.txt
+compile_commands.json
+
+# trash
+*.bar
+._* 
+*.log
+vgcore.*
+temp/
+
+# not mine
+docs/42
+
