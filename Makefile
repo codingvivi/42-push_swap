@@ -35,7 +35,7 @@ SRC_BIN_DIR  := $(BIN_DIR)/src
 TEST_BIN_DIR := $(BIN_DIR)/test
 # external libraries
 EXTERNAL_DIR     := external
-LIBFT_DIR        := $(EXTERNAL_DIR)/lib/libft
+LIBFT_DIR        := $(EXTERNAL_DIR)/libs/libft
 LIBFT_INCLUDE_DIR := $(LIBFT_DIR)/include
 LIBFT            := $(LIBFT_DIR)/build/lib/libft.a
 
@@ -59,6 +59,7 @@ all: init $(NAME) | $(LIBFT_DIR)
 ifeq ($(TURNIN_RUN),true)
 cp $(SRC_BIN_DIR)/$(NAME) $(NAME)
 endif
+
 # link objects into executable
 $(NAME): $(OBJS) $(LIBFT) | $(SRC_BIN_DIR)
 	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) -o $(SRC_BIN_DIR)/$(NAME)
@@ -74,10 +75,12 @@ $(SRC_DIR)/%.c: %.c | $(SRC_DIR)
 # move flat headers into include/ if they exist in root
 $(INCLUDE_DIR)/%.h: %.h | $(INCLUDE_DIR)
 	mv $< $@
-# move libft into external/lib/ if it exists in root
+# move libft into external/libs/ if it exists in root
+ifneq ($(wildcard libft),)
 $(LIBFT_DIR): libft | $(EXTERNAL_DIR)
-	mkdir -p $(EXTERNAL_DIR)/lib
+	mkdir -p $(EXTERNAL_DIR)/libs
 	mv $< $@
+endif
 
 # build libft
 $(LIBFT): | $(LIBFT_DIR)
@@ -125,9 +128,9 @@ init: $(SRCS) $(HDRS) $(LIBFT_DIR)
 stage: | $(DIST_DIR)
 	$(RM) $(DIST_DIR)/$(RELEASE_BASE)
 	mkdir -p $(DIST_DIR)/$(RELEASE_BASE)
-cp $(DIST_FILES) $(DIST_DIR)/$(RELEASE_BASE)/
-sed -i '1i TURNIN_RUN = true' $(DIST_DIR)/$(RELEASE_BASE)/Makefile
-cp -r $(LIBFT_DIR) $(DIST_DIR)/$(RELEASE_BASE)/libft
+	cp $(DIST_FILES) $(DIST_DIR)/$(RELEASE_BASE)/
+	sed -i '1i TURNIN_RUN = true' $(DIST_DIR)/$(RELEASE_BASE)/Makefile
+	cp -r $(LIBFT_DIR) $(DIST_DIR)/$(RELEASE_BASE)/libft
 # create a distribution tarball with the submission files
 dist: stage
 	tar -czf $(DIST_DIR)/$(RELEASE_NAME) -C $(DIST_DIR) $(RELEASE_BASE)
@@ -149,20 +152,20 @@ clean:
 
 # remove all build artifacts
 hclean: clean
-$(RM) $(SRC_BIN_DIR)/$(NAME) $(TEST_BIN_DIR)/$(TEST_NAME)
-$(MAKE) -C $(LIBFT_DIR) hclean
-$(RM) $(NAME)
-$(RM) $(DIST_DIR)/$(RELEASE_BASE)
+	$(RM) $(SRC_BIN_DIR)/$(NAME) $(TEST_BIN_DIR)/$(TEST_NAME)
+	$(MAKE) -C $(LIBFT_DIR) hclean
+	$(RM) $(NAME)
+	$(RM) $(DIST_DIR)/$(RELEASE_BASE)
 
 # flatten back to root (undo init)
 fclean: hclean
--mv $(SRC_DIR)/*.c .
+	-mv $(SRC_DIR)/*.c .
 	-mv $(INCLUDE_DIR)/*.h .
--mv $(LIBFT_DIR) libft
-ifeq ($(TURNIN_RUN),true)
--rmdir $(SRC_DIR) $(INCLUDE_DIR) 2>/dev/null; true
--$(RM) $(EXTERNAL_DIR)
-endif
+	-mv $(LIBFT_DIR) libft
+	ifeq ($(TURNIN_RUN),true)
+		rmdir $(SRC_DIR) $(INCLUDE_DIR) 2>/dev/null; true
+		$(RM) $(EXTERNAL_DIR)
+	endif
 # full rebuild
 re: hclean all
 
