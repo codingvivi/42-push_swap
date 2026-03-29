@@ -6,23 +6,43 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 17:26:20 by lrain             #+#    #+#             */
-/*   Updated: 2026/03/29 18:54:00 by lrain            ###   ########.fr       */
+/*   Updated: 2026/03/30 19:16:25 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "push_swap.h"
 #include <stdbool.h>
+#include <stdlib.h>
 
 bool	is_only_digits(char **arr);
 
 int	main(int argc, char **argv)
 {
-	if (argc < 2 || !is_only_digits(++argv))
+	const size_t	stack_size = argc - 1;
+	const size_t	max_i = stack_size - 1;
+	t_stack			stacks[2];
+	size_t			i;
+
+	if (argc < 2 || !is_only_digits(argv + 1))
 	{
 		ft_printf("Error\n");
 		return (1);
 	}
-	ft_printf("%s", argv);
+	// init
+	stacks[e_a] = (t_stack){.data = ft_calloc(stack_size, sizeof(int *)),
+		.head = max_i};
+	if (!stacks[e_a].data)
+		return (1);
+	i = 0;
+	while (i <= max_i)
+	{
+		stacks[e_a].data[i] = ft_atoi(argv[i]);
+		i++;
+	}
+	stacks[e_b] = (t_stack){.data = ft_calloc(stack_size, sizeof(int *))};
+	if (!stacks[e_b].data)
+		return (1);
 	return (0);
 }
 
