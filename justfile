@@ -1,6 +1,22 @@
-build *args:
-    make {{args}}
-    rsync -av --include-from='.turnin-include' --exclude='*' . turnin/
+root-dir := justfile_directory()
 
-turnin-sync:
-    rsync -av --include-from='.turnin-include' --exclude='*' . turnin/
+name := "push_swap"
+
+tools-dir := root-dir / "tools"
+
+build-dir := root-dir / "build"
+
+
+bin-dir := build-dir / "bin"
+bin-dir-src := bin-dir / "src"
+
+bin-src := bin-dir-src / name
+
+run *args:
+    {{bin-src}} {{args}}
+    
+build *args:
+    bear -- make {{args}}
+
+
+
