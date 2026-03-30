@@ -6,7 +6,7 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 17:26:20 by lrain             #+#    #+#             */
-/*   Updated: 2026/03/30 19:16:25 by lrain            ###   ########.fr       */
+/*   Updated: 2026/03/30 19:36:36 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,23 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	// init
-	stacks[e_a] = (t_stack){.data = ft_calloc(stack_size, sizeof(int *)),
-		.head = max_i};
+	stacks[e_a] = (t_stack){.data = malloc(stack_size * sizeof(int)), .tail = 0,
+		.head = stack_size};
 	if (!stacks[e_a].data)
 		return (1);
 	i = 0;
 	while (i <= max_i)
 	{
-		stacks[e_a].data[i] = ft_atoi(argv[i]);
+		stacks[e_a].data[i] = ft_atoi(argv[i + 1]);
 		i++;
 	}
-	stacks[e_b] = (t_stack){.data = ft_calloc(stack_size, sizeof(int *))};
+	stacks[e_b] = (t_stack){.data = malloc(stack_size * sizeof(int)), .tail = 0,
+		.head = stack_size};
 	if (!stacks[e_b].data)
 		return (1);
+	i = 0;
+	while (i <= max_i)
+		ft_printf("%i\n", stacks[e_a].data[i++]);
 	return (0);
 }
 
