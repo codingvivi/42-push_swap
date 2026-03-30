@@ -1,24 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   push.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/30 00:04:31 by lrain             #+#    #+#             */
-/*   Updated: 2026/03/30 19:20:25 by lrain            ###   ########.fr       */
+/*   Created: 2026/03/30 21:33:34 by lrain             #+#    #+#             */
+/*   Updated: 2026/03/30 21:33:40 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-typedef enum e_stack_idx
-{
-	e_a,
-	e_b,
-}		t_stack_idx;
+void	pa(t_stack stks[2]);
 
-typedef struct s_stack
-{
-	int	*data;
-	int	head;
-	int	tail;
-}		t_stack;
+void	pb(t_stack stks[2]);

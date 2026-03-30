@@ -6,12 +6,12 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 17:26:20 by lrain             #+#    #+#             */
-/*   Updated: 2026/03/30 19:36:36 by lrain            ###   ########.fr       */
+/*   Updated: 2026/03/30 22:03:22 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "push_swap.h"
+#include "stacks.h"
 #include <stdbool.h>
 #include <stdlib.h>
 
@@ -30,23 +30,35 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	// init
-	stacks[e_a] = (t_stack){.data = malloc(stack_size * sizeof(int)), .tail = 0,
-		.head = stack_size};
+	// a
+	stacks[e_a] = (t_stack){.data = malloc(stack_size * sizeof(int))};
 	if (!stacks[e_a].data)
 		return (1);
+	stacks[e_a] = (t_stack){.head = 0, .size = 0};
+	// b
+	stacks[e_b] = (t_stack){.data = malloc(stack_size * sizeof(int))};
+	if (!stacks[e_b].data)
+	{
+		free(stacks[e_a].data);
+		stacks[e_a].data = 0;
+		return (1);
+	}
+	stacks[e_b] = (t_stack){.head = 0, .size = 0};
+	// write args
 	i = 0;
 	while (i <= max_i)
 	{
 		stacks[e_a].data[i] = ft_atoi(argv[i + 1]);
-		i++;
+		stacks[e_a].head = i++;
+		stacks[e_a].size = i;
 	}
-	stacks[e_b] = (t_stack){.data = malloc(stack_size * sizeof(int)), .tail = 0,
-		.head = stack_size};
-	if (!stacks[e_b].data)
-		return (1);
-	i = 0;
+#ifndef NDEBUG
 	while (i <= max_i)
+	{
+		ft_printf("arguments:");
 		ft_printf("%i\n", stacks[e_a].data[i++]);
+	}
+#endif
 	return (0);
 }
 

@@ -5,6 +5,9 @@ TEST_NAME = runner
 
 CC         = cc
 CFLAGS     = -Wall -Wextra -Werror -fPIE
+ifeq ($(TURNIN_RUN),true)
+CFLAGS    += -DNDEBUG
+endif
 TEST_CFLAGS = $(CFLAGS)
 INCLUDES   = -I./src -I./include -I$(LIBFT_INCLUDE_DIR)
 
