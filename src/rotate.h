@@ -1,28 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rotate.c                                           :+:      :+:    :+:   */
+/*   rotate.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/30 22:02:46 by lrain             #+#    #+#             */
-/*   Updated: 2026/03/30 22:41:09 by lrain            ###   ########.fr       */
+/*   Created: 2026/03/30 22:46:07 by lrain             #+#    #+#             */
+/*   Updated: 2026/03/30 22:47:59 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stacks.h"
 
-void	rotate(t_stack s)
-{
-	s.head = (s.head + 1) % s.size;
-}
-
-void	ra(t_stack stks[2])
-{
-	rotate(stks[e_a]);
-}
-
-void	ba(t_stack stks[2])
-{
-	rotate(stks[e_b]);
-}
+void	rotate(t_stack s);
+void	ra(t_stack stks[2]);
+void	rb(t_stack stks[2]);
