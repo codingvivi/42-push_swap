@@ -6,7 +6,7 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 22:02:46 by lrain             #+#    #+#             */
-/*   Updated: 2026/03/31 20:30:58 by lrain            ###   ########.fr       */
+/*   Updated: 2026/03/31 20:39:46 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,20 @@
  After rotate:
  Array:  [ 1 | 2 | _ | _ | 3 ] head at 2
 */
-void	rotate(t_stack s)
+static void	rotate(t_stack *s)
 {
-	s.data[from_head(s, -s.size)] = s.data[s.head];
-	s.head = from_head(s, -1);
+	s->data[from_head(*s, -s->size)] = s->data[s->head];
+	s->head = from_head(*s, -1);
 }
 
 void	ra(t_stack stks[2])
 {
-	rotate(stks[e_a]);
+	rotate(&stks[e_a]);
 }
 
 void	rb(t_stack stks[2])
 {
-	rotate(stks[e_b]);
+	rotate(&stks[e_b]);
 }
 
 void	rr(t_stack stks[2])

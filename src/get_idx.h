@@ -10,8 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stacks.h"
-#include <stddef.h>
+#ifndef GET_IDX_H
+# define GET_IDX_H
+
+# include "stacks.h"
+# include <stddef.h>
 
 size_t	get_idx(size_t origin, int motion, size_t cap);
 size_t	from_head(t_stack s, int motion);
+
+#endif

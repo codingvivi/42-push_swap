@@ -10,6 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef PUSH_H
+# define PUSH_H
+
+# include "stacks.h"
+
 void	pa(t_stack stks[2]);
 
 void	pb(t_stack stks[2]);
+
+#endif

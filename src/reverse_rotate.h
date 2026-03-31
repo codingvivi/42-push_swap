@@ -10,8 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stacks.h"
+#ifndef REVERSE_ROTATE_H
+# define REVERSE_ROTATE_H
 
-void	reverse_rotate(t_stack s);
+# include "stacks.h"
+
+void	reverse_rotate(t_stack *s);
 void	rra(t_stack stks[2]);
 void	rrb(t_stack stks[2]);
+
+#endif

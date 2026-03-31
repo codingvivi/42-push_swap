@@ -6,7 +6,7 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 17:26:20 by lrain             #+#    #+#             */
-/*   Updated: 2026/03/30 22:54:41 by lrain            ###   ########.fr       */
+/*   Updated: 2026/03/31 21:01:04 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,17 @@ int	main(int argc, char **argv)
 		ft_printf("Error\n");
 		return (1);
 	}
-	// init
-	// a
-	stacks[e_a] = (t_stack){.data = malloc(stack_size * sizeof(int))};
+	stacks[e_a] = (t_stack){.data = malloc(stack_size * sizeof(int)), .head = 0,
+		.size = 0, .cap = stack_size};
 	if (!stacks[e_a].data)
 		return (1);
-	stacks[e_a] = (t_stack){.head = 0, .size = 0};
-	// b
-	stacks[e_b] = (t_stack){.data = malloc(stack_size * sizeof(int))};
+	stacks[e_b] = (t_stack){.data = malloc(stack_size * sizeof(int)), .head = 0,
+		.size = 0, .cap = stack_size};
 	if (!stacks[e_b].data)
 	{
 		free(stacks[e_a].data);
-		stacks[e_a].data = 0;
 		return (1);
 	}
-	stacks[e_b] = (t_stack){.head = 0, .size = 0};
 	// write args
 	i = 0;
 	while (i <= max_i)
@@ -64,15 +60,16 @@ int	main(int argc, char **argv)
 
 bool	is_only_digits(char **arr)
 {
-	char	*curr_c;
+	char	*c;
 
 	while (*arr)
 	{
-		curr_c = *arr;
-		while (*curr_c)
+		c = *arr;
+		while (*c)
 		{
-			if (!ft_isdigit(*curr_c++))
+			if (!ft_isdigit(*c) && !(*c == '+' || *c == '-'))
 				return (false);
+			c++;
 		}
 		arr++;
 	}
