@@ -1,30 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reverse_rotate.c                                   :+:      :+:    :+:   */
+/*   get_idx.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/30 22:43:11 by lrain             #+#    #+#             */
-/*   Updated: 2026/03/31 20:19:22 by lrain            ###   ########.fr       */
+/*   Created: 2026/03/31 19:31:36 by lrain             #+#    #+#             */
+/*   Updated: 2026/03/31 19:55:18 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_idx.h"
 #include "stacks.h"
+#include <stddef.h>
 
-void	reverse_rotate(t_stack s)
-{
-	s.head = from_head(s, +1);
-	s.data[s.head] = s.data[from_head(s, -s.size)];
-}
-
-void	rra(t_stack stks[2])
-{
-	reverse_rotate(stks[e_a]);
-}
-
-void	rrb(t_stack stks[2])
-{
-	reverse_rotate(stks[e_b]);
-}
+size_t	get_idx(size_t origin, int motion, size_t cap);
+size_t	from_head(t_stack s, int motion);
