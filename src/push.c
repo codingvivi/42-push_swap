@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_idx.h"
+#include "libft.h"
 #include "stacks.h"
 #include <stdbool.h>
 
@@ -28,9 +29,11 @@ static void	push(t_stack *stgt, t_stack *ssrc)
 void	pa(t_stack stks[2])
 {
 	push(&stks[e_a], &stks[e_b]);
+	ft_printf("pa\n");
 }
 
 void	pb(t_stack stks[2])
 {
 	push(&stks[e_b], &stks[e_a]);
+	ft_printf("pb\n");
 }

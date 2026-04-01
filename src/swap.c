@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_idx.h"
+#include "libft.h"
 #include "stacks.h"
 
 static void	swap(t_stack s)
@@ -26,15 +27,18 @@ static void	swap(t_stack s)
 void	sa(t_stack stks[2])
 {
 	swap(stks[e_a]);
+	ft_printf("sa\n");
 }
 
 void	sb(t_stack stks[2])
 {
 	swap(stks[e_b]);
+	ft_printf("sb\n");
 }
 
 void	ss(t_stack stks[2])
 {
-	sa(stks);
-	sb(stks);
+	swap(stks[e_a]);
+	swap(stks[e_b]);
+	ft_printf("ss\n");
 }

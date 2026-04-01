@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_idx.h"
+#include "libft.h"
 #include "stacks.h"
 
 void	reverse_rotate(t_stack *s)
@@ -22,15 +23,18 @@ void	reverse_rotate(t_stack *s)
 void	rra(t_stack stks[2])
 {
 	reverse_rotate(&stks[e_a]);
+	ft_printf("rra\n");
 }
 
 void	rrb(t_stack stks[2])
 {
 	reverse_rotate(&stks[e_b]);
+	ft_printf("rrb\n");
 }
 
 void	rrr(t_stack stks[2])
 {
-	rra(stks);
-	rrb(stks);
+	reverse_rotate(&stks[e_a]);
+	reverse_rotate(&stks[e_b]);
+	ft_printf("rrr\n");
 }
