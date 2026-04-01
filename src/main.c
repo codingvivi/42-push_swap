@@ -6,12 +6,13 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 17:26:20 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/01 18:59:53 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/01 23:32:40 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "safe_ft_atoi.h"
+#include "sort.h"
 #include "stacks.h"
 #include <stdbool.h>
 #include <stdlib.h>
@@ -43,7 +44,8 @@ static bool	parse_args(int argc, char **argv, t_stack *a)
 	ft_printf("arguments:\n");
 	i = 0;
 	while (i < a->cap)
-		ft_printf("%i\n", a->data[i++]);
+		ft_printf("%i ", a->data[i++]);
+	ft_printf("\n");
 #endif
 	return (true);
 }
@@ -72,5 +74,6 @@ int	main(int argc, char **argv)
 		ft_printf("Error\n");
 		return (1);
 	}
+	sort(stacks);
 	return (0);
 }

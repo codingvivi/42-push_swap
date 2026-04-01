@@ -22,7 +22,7 @@ static void	push(t_stack *stgt, t_stack *ssrc)
 	stgt->head = from_head(*stgt, +1);
 	stgt->size++;
 	stgt->data[stgt->head] = ssrc->data[ssrc->head];
-	ssrc->head = from_head(*ssrc, +1);
+	ssrc->head = from_head(*ssrc, -1);
 	ssrc->size--;
 }
 

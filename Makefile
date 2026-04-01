@@ -25,7 +25,8 @@ FILES = main \
 		push \
 		rotate \
 		reverse_rotate \
-		swap
+		swap \
+		sort
 
 
 # code
