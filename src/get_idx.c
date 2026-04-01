@@ -24,7 +24,7 @@ size_t	get_idx(const size_t origin, const int motion, const size_t cap)
 	return (((origin + cap) + motion) % cap);
 }
 
-size_t	i_head_plus(const t_stack s, const int motion)
+size_t	from_head(const t_stack s, const int motion)
 {
 	return (get_idx(s.head, motion, s.cap));
 }

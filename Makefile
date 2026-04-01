@@ -18,7 +18,14 @@ RELEASE_NAME = push_swap_turnin_$(RELEASE_TAG).tar.gz
 RELEASE_BASE = $(basename $(basename $(RELEASE_NAME)))
 
 
-FILES = main
+FILES = main \
+		safe_ft_atoi \
+		get_idx \
+		prepend \
+		push \
+		rotate \
+		reverse_rotate \
+		swap
 
 
 # code
@@ -47,7 +54,9 @@ DIST_DIR := $(BUILD_DIR)/dist
 
 HEADER_FILES =
 
-TEST_FILES = main
+TEST_FILES = \
+			main \
+			safe_ft_atoi \
 
 SRCS = $(FILES:%=$(SRC_DIR)/%.c)
 HDRS = $(HEADER_FILES:%=$(INCLUDE_DIR)/%.h)

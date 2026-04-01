@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   safe_atoi.c                                        :+:      :+:    :+:   */
+/*   safe_ft_atoi.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 16:05:49 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/01 16:48:29 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/01 17:18:14 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	ft_isspace(int i)
 	return (temp <= range || i == ' ');
 }
 
-static int	safe_converter(const char **sp, int **np, const int neg)
+static bool	safe_converter(const char **sp, int **np, const int neg)
 {
 	bool	has_digit;
 
@@ -34,19 +34,19 @@ static int	safe_converter(const char **sp, int **np, const int neg)
 	while (ft_isdigit(**sp))
 	{
 		if (**np < (INT_MIN + (**sp - '0')) / 10)
-			return (1);
+			return (false);
 		**np = (10 * (**np)) - (*(*sp)++ - '0');
 	}
 	if (!neg)
 		**np *= -1;
 	if (!has_digit)
-		return (1);
+		return (false);
 	if (!ft_isspace(**sp) && **sp != '\0')
-		return (1);
-	return (0);
+		return (false);
+	return (true);
 }
 
-int	safe_ft_atoi(const char *str, int *nb)
+bool	safe_ft_atoi(const char *str, int *nb)
 {
 	int	neg;
 

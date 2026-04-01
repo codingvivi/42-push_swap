@@ -10,4 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int	safe_ft_atoi(const char *str, int *nb);
+#include <stdbool.h>
+
+bool	safe_ft_atoi(const char *str, int *nb);
