@@ -6,7 +6,7 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 17:26:20 by lrain             #+#    #+#             */
-/*   Updated: 2026/03/31 21:01:04 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/01 16:52:35 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@ int	main(int argc, char **argv)
 {
 	const size_t	stack_size = argc - 1;
 	const size_t	max_i = stack_size - 1;
+	char			**usr_in;
 	t_stack			stacks[2];
 	size_t			i;
 
-	if (argc < 2 || !is_only_digits(argv + 1))
+	if (argc < 2)
 	{
 		ft_printf("Error\n");
 		return (1);
