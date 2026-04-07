@@ -59,7 +59,7 @@ FILES = main \
         stackops/swap \
         sort/sort \
         sort/lis \
-        sort/prepend
+        sort/cost_ops
 
 HEADERS = stacks \
           print_stacks \
@@ -72,7 +72,7 @@ HEADERS = stacks \
           stackops/swap \
           sort/sort \
           sort/lis \
-          sort/prepend
+          sort/cost_ops
 
 TEST_FILES = \
             main \

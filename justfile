@@ -25,10 +25,10 @@ brun bargs="" rargs="":
     just build {{bargs}}
     just run {{rargs}}
 
-crun bargs="" rargs="":
-    make clean
-    just brun {{bargs}} {{rargs}}
+crun bargs="" rargs="":                                                                                     
+      make clean
+      just brun "{{bargs}}" "{{rargs}}"             
 
 hrun bargs="" rargs="":
     make hclean
-    just brun {{bargs}} {{rargs}}
+    just brun "{{bargs}}" "{{rargs}}"

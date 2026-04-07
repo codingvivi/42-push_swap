@@ -6,7 +6,7 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 23:34:32 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/03 23:35:57 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/08 00:45:47 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ t_subseq	lis_tabulation(const t_stack s)
 		parent[i] = -1;
 		for (int j = 0; j < i; j++)
 		{
-			if (s.data[from_head(s, -j)] < s.data[from_head(s, -i)]
-				&& dp[j] + 1 > dp[i])
+			if (s.data[from_head(s, -j)] < s.data[from_head(s, -i)] && dp[j]
+				+ 1 > dp[i])
 			{
 				dp[i] = dp[j] + 1;
 				parent[i] = j;
