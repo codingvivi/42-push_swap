@@ -18,7 +18,7 @@ run *args:
 build *args:
     bear -- make {{args}}
 
-rerun bargs="" rargs="":
+brun bargs="" rargs="":
     just build {{bargs}}
     just run {{rargs}}
 

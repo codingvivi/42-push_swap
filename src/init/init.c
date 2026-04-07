@@ -41,6 +41,7 @@ static bool	parse_args(int argc, char **argv, t_stack *a, bool *verbose)
 	char	**usr_in;
 	size_t	i;
 
+	(void)verbose;
 #ifndef NDEBUG
 	if (argc > 1 && (!ft_strncmp(argv[1], "-v", 3) || !ft_strncmp(argv[1],
 				"--verbose", 10)))

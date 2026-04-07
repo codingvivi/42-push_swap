@@ -1,42 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stacks.h                                           :+:      :+:    :+:   */
+/*   print_stacks.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/30 00:04:31 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/07 15:13:01 by lrain            ###   ########.fr       */
+/*   Created: 2026/04/07 16:40:00 by lrain             #+#    #+#             */
+/*   Updated: 2026/04/07 16:40:00 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STACKS_H
-# define STACKS_H
+#include "stacks.h"
 
-# include <stddef.h>
-# include <sys/types.h>
-typedef enum e_stack_idx
-{
-	e_a,
-	e_b,
-}			t_stack_idx;
-typedef enum e_move_idx
-{
-	e_arot,
-	e_brot,
-}			t_move_idx;
-
-typedef struct s_stack
-{
-	int		*data;
-	size_t	head;
-	size_t	size;
-	size_t	cap;
-}			t_stack;
-
-typedef struct s_subseq
-{
-	int		*seq;
-	size_t	size;
-}			t_subseq;
-#endif
+void	print_stacks(t_stack stks[2]);

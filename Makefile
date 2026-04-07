@@ -2,6 +2,7 @@ NAME = push_swap
 TEST_NAME = runner
 
 .DEFAULT_GOAL := all
+.SECONDEXPANSION:
 
 CC         = cc
 CFLAGS     = -Wall -Wextra -Werror -fPIE
@@ -9,7 +10,6 @@ ifeq ($(TURNIN_RUN),true)
 CFLAGS    += -DNDEBUG
 endif
 TEST_CFLAGS = $(CFLAGS)
-INCLUDES   = -I./src -I./src/init -I./src/sort -I./src/stackops -I./include -I$(LIBFT_INCLUDE_DIR)
 
 RM = rm -rf
 
@@ -17,81 +17,99 @@ RELEASE_TAG  ?=
 RELEASE_NAME = push_swap_turnin_$(RELEASE_TAG).tar.gz
 RELEASE_BASE = $(basename $(basename $(RELEASE_NAME)))
 
-
-FILES = main \
-		init/init \
-		init/safe_ft_atoi \
-		stackops/get_idx \
-		stackops/push \
-		stackops/rotate \
-		stackops/reverse_rotate \
-		stackops/swap \
-		sort/sort \
-		sort/lis \
-		sort/prepend
-
-
 # code
-SRC_DIR     := src
-INCLUDE_DIR := include
+SRC_DIR      := src
 TEST_SRC_DIR := test
 
 # build output
-BUILD_DIR   := build
-OBJ_DIR     := $(BUILD_DIR)/obj
-SRC_OBJ_DIR := $(OBJ_DIR)/src
+BUILD_DIR    := build
+OBJ_DIR      := $(BUILD_DIR)/obj
+SRC_OBJ_DIR  := $(OBJ_DIR)/src
 TEST_OBJ_DIR := $(OBJ_DIR)/test
 
 # build results
 BIN_DIR      := $(BUILD_DIR)/bin
 SRC_BIN_DIR  := $(BIN_DIR)/src
 TEST_BIN_DIR := $(BIN_DIR)/test
+
 # external libraries
-EXTERNAL_DIR     := external
-LIBFT_DIR        := $(EXTERNAL_DIR)/libs/libft
+EXTERNAL_DIR      := external
+LIBFT_DIR         := $(EXTERNAL_DIR)/libs/libft
 LIBFT_INCLUDE_DIR := $(LIBFT_DIR)/include
-LIBFT            := $(LIBFT_DIR)/build/lib/libft.a
+LIBFT             := $(LIBFT_DIR)/build/lib/libft.a
 
 # dist
 DIST_DIR := $(BUILD_DIR)/dist
 
-HEADER_FILES =
+INCLUDES = -I./$(SRC_DIR) \
+           -I./$(SRC_DIR)/init \
+           -I./$(SRC_DIR)/sort \
+           -I./$(SRC_DIR)/stackops \
+           -I$(LIBFT_INCLUDE_DIR)
+
+# nested layout - single source of truth for both dev and turnin
+FILES = main \
+        print_stacks \
+        init/init \
+        init/safe_ft_atoi \
+        stackops/get_idx \
+        stackops/push \
+        stackops/rotate \
+        stackops/reverse_rotate \
+        stackops/swap \
+        sort/sort \
+        sort/lis \
+        sort/prepend
+
+HEADERS = stacks \
+          print_stacks \
+          init/init \
+          init/safe_ft_atoi \
+          stackops/get_idx \
+          stackops/push \
+          stackops/rotate \
+          stackops/reverse_rotate \
+          stackops/swap \
+          sort/sort \
+          sort/lis \
+          sort/prepend
 
 TEST_FILES = \
-			main \
-			safe_ft_atoi \
+            main \
+            safe_ft_atoi
 
 SRCS = $(FILES:%=$(SRC_DIR)/%.c)
-HDRS = $(HEADER_FILES:%=$(INCLUDE_DIR)/%.h)
+HDRS = $(HEADERS:%=$(SRC_DIR)/%.h)
 OBJS = $(FILES:%=$(SRC_OBJ_DIR)/%.o)
 TEST_SRCS = $(TEST_FILES:%=$(TEST_SRC_DIR)/%.c)
 TEST_OBJS = $(TEST_FILES:%=$(TEST_OBJ_DIR)/%.o)
 
-DIST_FILES = Makefile README.md $(SRCS) $(HDRS)
 # build
-all: init $(NAME) | $(LIBFT_DIR)
-
-ifeq ($(TURNIN_RUN),true)
-cp $(SRC_BIN_DIR)/$(NAME) $(NAME)
-endif
+all: init $(NAME)
 
 # link objects into executable
 $(NAME): $(OBJS) $(LIBFT) | $(SRC_BIN_DIR)
 	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) -o $(SRC_BIN_DIR)/$(NAME)
+ifeq ($(TURNIN_RUN),true)
+	cp $(SRC_BIN_DIR)/$(NAME) $(NAME)
+endif
 
 # compile source files to objects
 $(SRC_OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(SRC_OBJ_DIR)
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-# move flat source files into src/ if they exist in root
-$(SRC_DIR)/%.c: %.c | $(SRC_DIR)
+# (turnin only) move flat sources/headers from root to nested src/
+# secondary expansion: for target src/foo/bar.c, prereq becomes bar.c (root)
+$(SRC_DIR)/%.c: $$(notdir %).c
+	@mkdir -p $(@D)
 	mv $< $@
 
-# move flat headers into include/ if they exist in root
-$(INCLUDE_DIR)/%.h: %.h | $(INCLUDE_DIR)
+$(SRC_DIR)/%.h: $$(notdir %).h
+	@mkdir -p $(@D)
 	mv $< $@
-# move libft into external/libs/ if it exists in root
+
+# (turnin only) move libft from root into external/libs/ if it exists
 ifneq ($(wildcard libft),)
 $(LIBFT_DIR): libft | $(EXTERNAL_DIR)
 	mkdir -p $(EXTERNAL_DIR)/libs
@@ -122,31 +140,26 @@ $(TEST_BIN_DIR): | $(BUILD_DIR)
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
-# create src directory
-$(SRC_DIR):
-	mkdir -p $(SRC_DIR)
-
-# create include directory
-$(INCLUDE_DIR):
-	mkdir -p $(INCLUDE_DIR)
-
 # create external directory
 $(EXTERNAL_DIR):
 	mkdir -p $(EXTERNAL_DIR)
+
 # create dist directory
 $(DIST_DIR): | $(BUILD_DIR)
 	mkdir -p $(DIST_DIR)
 
-# initialize project structure from flat layout
-init: $(SRCS) $(HDRS) $(LIBFT_DIR)
+# initialize project structure (no-op in dev; unflatten in turnin)
+init: $(SRCS) $(HDRS) | $(LIBFT_DIR)
 
 # create flat distribution environment for turnin
 stage: | $(DIST_DIR)
 	$(RM) $(DIST_DIR)/$(RELEASE_BASE)
 	mkdir -p $(DIST_DIR)/$(RELEASE_BASE)
-	cp $(DIST_FILES) $(DIST_DIR)/$(RELEASE_BASE)/
+	cp Makefile README.md $(DIST_DIR)/$(RELEASE_BASE)/
+	cp $$(find $(SRC_DIR) -type f \( -name '*.c' -o -name '*.h' \)) $(DIST_DIR)/$(RELEASE_BASE)/
 	sed -i '1i TURNIN_RUN = true' $(DIST_DIR)/$(RELEASE_BASE)/Makefile
 	cp -r $(LIBFT_DIR) $(DIST_DIR)/$(RELEASE_BASE)/libft
+
 # create a distribution tarball with the submission files
 dist: stage
 	tar -czf $(DIST_DIR)/$(RELEASE_NAME) -C $(DIST_DIR) $(RELEASE_BASE)
@@ -165,24 +178,23 @@ $(TEST_OBJ_DIR)/%.o: $(TEST_SRC_DIR)/%.c | $(TEST_OBJ_DIR)
 # remove object files
 clean:
 	$(RM) $(OBJ_DIR)
+	-$(MAKE) -C $(LIBFT_DIR) clean
 
-# remove all build artifacts
-hclean: clean
-	$(RM) $(SRC_BIN_DIR)/$(NAME) $(TEST_BIN_DIR)/$(TEST_NAME)
-	$(MAKE) -C $(LIBFT_DIR) hclean
+# remove all build artifacts (and unflatten in turnin)
+fclean: clean
+	$(RM) $(BIN_DIR)
 	$(RM) $(NAME)
-	$(RM) $(DIST_DIR)/$(RELEASE_BASE)
-
-# flatten back to root (undo init)
-fclean: hclean
-	-mv $(SRC_DIR)/*.c .
-	-mv $(INCLUDE_DIR)/*.h .
+	$(RM) $(DIST_DIR)
+	-$(MAKE) -C $(LIBFT_DIR) fclean
+ifeq ($(TURNIN_RUN),true)
+	-find $(SRC_DIR) -type f -name '*.c' -exec mv {} . \;
+	-find $(SRC_DIR) -type f -name '*.h' -exec mv {} . \;
 	-mv $(LIBFT_DIR) libft
-	ifeq ($(TURNIN_RUN),true)
-		rmdir $(SRC_DIR) $(INCLUDE_DIR) 2>/dev/null; true
-		$(RM) $(EXTERNAL_DIR)
-	endif
-# full rebuild
-re: hclean all
+	-find $(SRC_DIR) -type d -empty -delete
+	$(RM) $(EXTERNAL_DIR)
+endif
 
-.PHONY: all init stage dist test clean hclean fclean re
+# full rebuild
+re: fclean all
+
+.PHONY: all init stage dist test clean fclean re
