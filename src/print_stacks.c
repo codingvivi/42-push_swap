@@ -6,7 +6,7 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:40:00 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/07 18:46:22 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/07 22:03:04 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,5 @@ void	print_stacks(t_stack stks[2])
 	ft_printf("\nB:\n");
 	while (i < b->size)
 		ft_printf("%i ", b->data[from_head(*b, -i++)]);
-	ft_printf("\n");
+	ft_printf("\n\n");
 }

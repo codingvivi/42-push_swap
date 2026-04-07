@@ -6,7 +6,7 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 00:04:31 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/07 15:13:01 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/07 22:28:58 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ typedef enum e_stack_idx
 }			t_stack_idx;
 typedef enum e_move_idx
 {
-	e_arot,
-	e_brot,
+	e_top_b,
+	e_dest_a,
 }			t_move_idx;
 
 typedef struct s_stack

@@ -6,7 +6,7 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 19:07:54 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/07 18:47:16 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/07 22:41:30 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,9 @@
 #include "push.h"
 #include "rotate.h"
 #include "stacks.h"
-#include <stdatomic.h>
 #include <stdbool.h>
 #include <stddef.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <sys/types.h>
 
 static void	move_non_lis(t_stack stks[2], t_subseq lis)
 {
@@ -63,7 +60,7 @@ static ssize_t	**init_cost_arr(size_t size)
 	if (!move_costs)
 		return (NULL);
 	i = 0;
-	while (i <= e_b)
+	while (i <= e_dest_a)
 	{
 		move_costs[i] = malloc(size * sizeof(ssize_t));
 		if (!move_costs[i])
@@ -77,7 +74,7 @@ static ssize_t	get_cost(size_t idx, size_t size)
 {
 	ssize_t	cost;
 
-	if ((idx <= size - 1) / 2)
+	if (idx <= ((size - 1) / 2))
 		cost = idx;
 	else
 		cost = -(ssize_t)(size - idx);
@@ -94,7 +91,7 @@ static void	write_costs(ssize_t **mc, t_stack stks[2])
 	i = 0;
 	while (i < b.size)
 	{
-		mc[e_b][i] = get_cost(i, b.size);
+		mc[e_top_b][i] = get_cost(i, b.size);
 		i++;
 	}
 	i = 0;
@@ -107,7 +104,7 @@ static void	write_costs(ssize_t **mc, t_stack stks[2])
 				break ;
 			idx_a++;
 		}
-		mc[e_a][i] = get_cost(idx_a, a.size);
+		mc[e_dest_a][i] = get_cost(idx_a, a.size);
 		i++;
 	}
 }
@@ -131,10 +128,10 @@ bool	sort(t_stack stks[2], bool verbose)
 	if (verbose)
 	{
 		i = 0;
-		while (i < e_b)
+		while (i <= e_dest_a)
 		{
 			j = 0;
-			while (j < stks[i].size)
+			while (j < stks[e_b].size)
 			{
 				ft_printf("%i\n", move_costs[i][j]);
 				j++;

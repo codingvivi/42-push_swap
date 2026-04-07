@@ -12,6 +12,9 @@ bin-dir-src := bin-dir / "src"
 
 bin-src := bin-dir-src / name
 
+_default:
+    @just -l
+
 run *args:
     {{bin-src}} {{args}}
     
@@ -22,3 +25,10 @@ brun bargs="" rargs="":
     just build {{bargs}}
     just run {{rargs}}
 
+crun bargs="" rargs="":
+    make clean
+    just brun {{bargs}} {{rargs}}
+
+hrun bargs="" rargs="":
+    make hclean
+    just brun {{bargs}} {{rargs}}
