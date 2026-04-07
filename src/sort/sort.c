@@ -6,7 +6,7 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 19:07:54 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/07 17:52:58 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/07 18:47:16 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,22 +89,25 @@ static void	write_costs(ssize_t **mc, t_stack stks[2])
 	const t_stack	a = stks[e_a];
 	const t_stack	b = stks[e_b];
 	size_t			i;
-	size_t			i_a;
+	size_t			idx_a;
 
 	i = 0;
 	while (i < b.size)
+	{
 		mc[e_b][i] = get_cost(i, b.size);
+		i++;
+	}
 	i = 0;
 	while (i < b.size)
 	{
-		i_a = 0;
-		while (i_a < a.size)
+		idx_a = 0;
+		while (idx_a < a.size)
 		{
-			if (a.data[from_head(a, -i_a)] > b.data[from_head(b, -i)])
+			if (a.data[from_head(a, -idx_a)] > b.data[from_head(b, -i)])
 				break ;
-			i_a++;
+			idx_a++;
 		}
-		mc[e_a][i] = i_a;
+		mc[e_a][i] = get_cost(idx_a, a.size);
 		i++;
 	}
 }
@@ -113,6 +116,8 @@ bool	sort(t_stack stks[2], bool verbose)
 {
 	const t_subseq	lis = lis_tabulation(stks[e_a]);
 	ssize_t			**move_costs;
+	size_t			i;
+	size_t			j;
 
 	if (!lis.seq)
 		return (false);
@@ -123,5 +128,20 @@ bool	sort(t_stack stks[2], bool verbose)
 	if (!move_costs)
 		return (false);
 	write_costs(move_costs, stks);
+	if (verbose)
+	{
+		i = 0;
+		while (i < e_b)
+		{
+			j = 0;
+			while (j < stks[i].size)
+			{
+				ft_printf("%i\n", move_costs[i][j]);
+				j++;
+			}
+			ft_printf("\n\n");
+			i++;
+		}
+	}
 	return (true);
 }
