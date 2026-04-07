@@ -15,8 +15,9 @@
 
 # include "stacks.h"
 # include <stddef.h>
+# include <sys/types.h>
 
-size_t	get_idx(size_t origin, int motion, size_t cap);
-size_t	from_head(t_stack s, int motion);
+ssize_t	get_idx(size_t origin, int motion, size_t cap);
+ssize_t	from_head(t_stack s, int motion);
 
 #endif

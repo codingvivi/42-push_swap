@@ -1,37 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stacks.h                                           :+:      :+:    :+:   */
+/*   get_idx.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/30 00:04:31 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/03 23:43:37 by lrain            ###   ########.fr       */
+/*   Created: 2026/03/31 19:25:24 by lrain             #+#    #+#             */
+/*   Updated: 2026/03/31 19:55:20 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STACKS_H
-# define STACKS_H
+#include "stacks.h"
+#include <stddef.h>
+#include <sys/types.h>
 
-# include <stddef.h>
-# include <sys/types.h>
-typedef enum e_stack_idx
-{
-	e_a,
-	e_b,
-}			t_stack_idx;
+/*
++ cap --> protect from negative idx/underflow
++ motion --> move accordingly
+% cap --> remove protection & wrap around
+*/
 
-typedef struct s_stack
+ssize_t	get_idx(const size_t origin, const int motion, const size_t cap)
 {
-	int		*data;
-	size_t	head;
-	size_t	size;
-	size_t	cap;
-}			t_stack;
+	return ((ssize_t)(((origin + cap) + motion) % cap));
+}
 
-typedef struct s_subseq
+ssize_t	from_head(const t_stack s, const int motion)
 {
-	int		*seq;
-	size_t	size;
-}			t_subseq;
-#endif
+	return (get_idx(s.head, motion, s.cap));
+}

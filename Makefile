@@ -9,7 +9,7 @@ ifeq ($(TURNIN_RUN),true)
 CFLAGS    += -DNDEBUG
 endif
 TEST_CFLAGS = $(CFLAGS)
-INCLUDES   = -I./src -I./include -I$(LIBFT_INCLUDE_DIR)
+INCLUDES   = -I./src -I./src/init -I./src/sort -I./src/stackops -I./include -I$(LIBFT_INCLUDE_DIR)
 
 RM = rm -rf
 
@@ -19,14 +19,16 @@ RELEASE_BASE = $(basename $(basename $(RELEASE_NAME)))
 
 
 FILES = main \
-		safe_ft_atoi \
-		get_idx \
-		prepend \
-		push \
-		rotate \
-		reverse_rotate \
-		swap \
-		sort
+		init/init \
+		init/safe_ft_atoi \
+		stackops/get_idx \
+		stackops/push \
+		stackops/rotate \
+		stackops/reverse_rotate \
+		stackops/swap \
+		sort/sort \
+		sort/lis \
+		sort/prepend
 
 
 # code
@@ -79,6 +81,7 @@ $(NAME): $(OBJS) $(LIBFT) | $(SRC_BIN_DIR)
 
 # compile source files to objects
 $(SRC_OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(SRC_OBJ_DIR)
+	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 # move flat source files into src/ if they exist in root

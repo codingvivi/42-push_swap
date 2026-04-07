@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_idx.c                                          :+:      :+:    :+:   */
+/*   init.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/31 19:25:24 by lrain             #+#    #+#             */
-/*   Updated: 2026/03/31 19:55:20 by lrain            ###   ########.fr       */
+/*   Created: 2026/04/02 00:39:17 by lrain             #+#    #+#             */
+/*   Updated: 2026/04/03 22:52:28 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stacks.h"
-#include <stddef.h>
+#ifndef INIT_H
+# define INIT_H
 
-/*
-+ cap --> protect from negative idx/underflow
-+ motion --> move accordingly
-% cap --> remove protection & wrap around
-*/
+# include "stacks.h"
+# include <stdbool.h>
+# include <stddef.h>
 
-size_t	get_idx(const size_t origin, const int motion, const size_t cap)
-{
-	return (((origin + cap) + motion) % cap);
-}
+t_stack	init_stack(size_t cap);
+bool	init_ab(size_t stk_size, t_stack stks[2]);
+bool	init_a(int argc, char **argv, t_stack *a, bool *verbose);
 
-size_t	from_head(const t_stack s, const int motion)
-{
-	return (get_idx(s.head, motion, s.cap));
-}
+#endif

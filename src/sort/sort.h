@@ -11,5 +11,6 @@
 /* ************************************************************************** */
 
 #include "stacks.h"
+#include <stdbool.h>
 
-void	sort(t_stack stacks[2]);
+void	sort(t_stack stacks[2], bool verbose);
