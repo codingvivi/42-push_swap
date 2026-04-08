@@ -6,7 +6,7 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 00:04:31 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/07 22:28:58 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/08 17:00:32 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ typedef enum e_stack_idx
 }			t_stack_idx;
 typedef enum e_move_idx
 {
-	e_top_b,
-	e_dest_a,
+	e_topb,
+	e_desta,
 }			t_move_idx;
 
 typedef struct s_stack
@@ -39,4 +39,10 @@ typedef struct s_subseq
 	int		*seq;
 	size_t	size;
 }			t_subseq;
+
+typedef struct s_idx_cost
+{
+	size_t	idx;
+	ssize_t	cost;
+}			t_idx_cost;
 #endif

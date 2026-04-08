@@ -6,7 +6,7 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 22:56:54 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/08 00:40:17 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/08 17:00:32 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static ssize_t	**init_cost_arr(size_t size)
 	if (!arr)
 		return (NULL);
 	i = 0;
-	while (i <= e_dest_a)
+	while (i <= e_desta)
 	{
 		arr[i] = malloc(size * sizeof(ssize_t));
 		// TODO free
@@ -67,13 +67,13 @@ static void	write_costs(ssize_t **mc_p, const t_stack stks[2])
 				break ;
 			idx_a++;
 		}
-		mc_p[e_dest_a][i] = get_cost(idx_a, a.size);
+		mc_p[e_desta][i] = get_cost(idx_a, a.size);
 		i++;
 	}
 	i = 0;
 	while (i < b.size)
 	{
-		mc_p[e_top_b][i] = get_cost(i, b.size);
+		mc_p[e_topb][i] = get_cost(i, b.size);
 		i++;
 	}
 }
@@ -92,7 +92,7 @@ ssize_t	**generate_costs(const t_stack stks[2], bool verbose)
 	if (verbose)
 	{
 		i = 0;
-		while (i <= e_dest_a)
+		while (i <= e_desta)
 		{
 			j = 0;
 			while (j < stks[e_b].size)
