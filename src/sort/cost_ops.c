@@ -6,7 +6,7 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 22:56:54 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/09 17:36:20 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/09 18:03:25 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,22 @@ static size_t	find_dest_idx(const t_stack a, int b_val)
 			found = true;
 		}
 		i++;
+	}
+	if (!found)
+	{
+		i = 0;
+		candidate = i;
+		can_val = a.data[from_head(a, -candidate)];
+		while (i < a.size)
+		{
+			i_val = a.data[from_head(a, -i)];
+			if (i_val < can_val)
+			{
+				candidate = i;
+				can_val = a.data[from_head(a, -candidate)];
+			}
+			i++;
+		}
 	}
 	return (candidate);
 }

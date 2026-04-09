@@ -35,11 +35,11 @@ hrun bargs="" rargs="":
 
 
 
-visualizer *args:
+visualize *args:
     make visualizer
     external/tools/push_swap_visualizer/build/bin/visualizer {{args}}
 
-visualizer-deps:
+visualize-deps:
     sudo zypper install \
         cmake \
         gcc-c++ \
