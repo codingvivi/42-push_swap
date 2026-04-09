@@ -6,7 +6,7 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 00:39:17 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/03 22:52:06 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/09 16:31:48 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,27 +59,18 @@ static bool	parse_args(int argc, char **argv, t_stack *a, bool *verbose)
 	i = 0;
 	while (i < a->cap)
 	{
-		if (!safe_ft_atoi(usr_in[i], &a->data[i]))
+		if (!safe_ft_atoi(usr_in[i], &a->data[a->cap - 1 - i]))
 			return (false);
-		a->head = i++;
-		a->size = i;
+		i++;
 	}
+	a->head = a->cap - 1;
+	a->size = a->cap;
 	return (true);
 }
 
 bool	init_a(int argc, char **argv, t_stack *a, bool *verbose)
 {
-	size_t	i;
-
 	if (!parse_args(argc, argv, a, verbose))
 		return (false);
-	if (*verbose)
-	{
-		ft_printf("arguments:\n");
-		i = -1;
-		while (++i < a->cap)
-			ft_printf("%i ", a->data[i]);
-		ft_printf("\n");
-	}
 	return (true);
 }

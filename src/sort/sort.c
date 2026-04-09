@@ -6,7 +6,7 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 19:07:54 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/09 01:55:51 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/09 16:50:09 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,56 +105,60 @@ static t_idx_cost	cheapest_idx(ssize_t **mc, size_t size_b)
 	return (minc);
 }
 
+typedef void		(*t_op)(t_stack[2]);
+
+static t_op	pick_b(ssize_t n)
+{
+	if (n < 0)
+		return (rrb);
+	return (rb);
+}
+
+static t_op	pick_a(ssize_t n)
+{
+	if (n < 0)
+		return (rra);
+	return (ra);
+}
+
+static t_op	pick_both(ssize_t n)
+{
+	if (n < 0)
+		return (rrr);
+	return (rr);
+}
+
 static void	sort_into_a(ssize_t **mc, t_stack stks[2])
 {
-	const t_idx_cost	cheapest = cheapest_idx(mc, stks[e_b].size);
-	ssize_t				r_num[2] = {mc[e_topb][cheapest.idx],
-						mc[e_desta][cheapest.idx]};
-	ssize_t				double_r;
-	ssize_t				total_r;
-	void				(*ops[2])(t_stack[2]);
-	ssize_t				i;
+	const t_idx_cost	cheap = cheapest_idx(mc, stks[e_b].size);
+	const ssize_t		rb_n = mc[e_topb][cheap.idx];
+	const ssize_t		ra_n = mc[e_desta][cheap.idx];
+	t_op				op_b;
+	t_op				op_a;
+	t_op				op_both;
+	ssize_t				mag_b;
+	ssize_t				mag_a;
+	ssize_t				both;
 
-	double_r = 0;
-	if (r_num[e_topb] > 0 && r_num[e_desta] > 0)
+	op_b = pick_b(rb_n);
+	op_a = pick_a(ra_n);
+	op_both = NULL;
+	mag_b = ps_abs(rb_n);
+	mag_a = ps_abs(ra_n);
+	both = 0;
+	if ((rb_n < 0) == (ra_n < 0) && rb_n && ra_n)
 	{
-		double_r = max(r_num[e_topb], r_num[e_desta]) - min(r_num[e_topb],
-				r_num[e_desta]);
-		ops[e_topb] = rr;
-		ops[e_desta] = ra;
+		op_both = pick_both(rb_n);
+		both = min(mag_a, mag_b);
+		mag_a -= both;
+		mag_b -= both;
 	}
-	if (r_num[e_topb] < 0 && r_num[e_desta] < 0)
-	{
-		double_r = min(r_num[e_topb], r_num[e_desta]) - max(r_num[e_topb],
-				r_num[e_desta]);
-		ops[e_topb] = rrr;
-		ops[e_desta] = rra;
-	}
-	if (double_r)
-	{
-		r_num[e_topb] = double_r;
-		total_r = cheapest.idx;
-		if (double_r < 0)
-			total_r *= -1;
-		r_num[e_topb] = total_r - double_r;
-	}
-	else
-	{
-		if (r_num[e_topb] > 0)
-			ops[e_topb] = rb;
-		else
-			ops[e_topb] = rrb;
-		if (r_num[e_desta] > 0)
-			ops[e_desta] = ra;
-		else
-			ops[e_desta] = rrb;
-	}
-	i = ps_abs(r_num[e_topb]);
-	while (i-- > 0)
-		ops[e_topb](stks);
-	i = ps_abs(r_num[e_desta]);
-	while (i-- > 0)
-		ops[e_desta](stks);
+	while (both-- > 0)
+		op_both(stks);
+	while (mag_b-- > 0)
+		op_b(stks);
+	while (mag_a-- > 0)
+		op_a(stks);
 	pa(stks);
 }
 
@@ -176,5 +180,7 @@ bool	sort(t_stack stks[2], bool verbose)
 			return (false);
 		sort_into_a(move_costs, stks);
 	}
+	if (verbose)
+		print_stacks(stks);
 	return (true);
 }

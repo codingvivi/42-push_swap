@@ -32,3 +32,22 @@ crun bargs="" rargs="":
 hrun bargs="" rargs="":
     make hclean
     just brun "{{bargs}}" "{{rargs}}"
+
+
+
+visualizer *args:
+    make visualizer
+    external/tools/push_swap_visualizer/build/bin/visualizer {{args}}
+
+visualizer-deps:
+    sudo zypper install \
+        cmake \
+        gcc-c++ \
+        clang \
+        Mesa-libGL-devel \
+        glu-devel \
+        libX11-devel \
+        libXrandr-devel \
+        libudev-devel \
+        freetype2-devel \
+        sfml2-devel

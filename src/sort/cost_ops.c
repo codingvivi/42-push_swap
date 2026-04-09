@@ -6,7 +6,7 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 22:56:54 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/08 17:00:32 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/09 17:36:20 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,42 @@ static ssize_t	get_cost(size_t tgt_idx, size_t size)
 	return (cost);
 }
 
+static size_t	find_dest_idx(const t_stack a, int b_val)
+{
+	size_t	i;
+	int		i_val;
+	size_t	candidate;
+	int		can_val;
+	bool	found;
+
+	i = 0;
+	candidate = i;
+	found = false;
+	while (i < a.size)
+	{
+		i_val = a.data[from_head(a, -i)];
+		if (i_val > b_val && (i_val < can_val || !found))
+		{
+			candidate = i;
+			can_val = a.data[from_head(a, -candidate)];
+			found = true;
+		}
+		i++;
+	}
+	return (candidate);
+}
+
 static void	write_costs(ssize_t **mc_p, const t_stack stks[2])
 {
 	const t_stack	a = stks[e_a];
 	const t_stack	b = stks[e_b];
 	size_t			i;
-	size_t			idx_a;
 
 	i = 0;
 	while (i < b.size)
 	{
-		idx_a = 0;
-		while (idx_a < a.size)
-		{
-			if (a.data[from_head(a, -idx_a)] > b.data[from_head(b, -i)])
-				break ;
-			idx_a++;
-		}
-		mc_p[e_desta][i] = get_cost(idx_a, a.size);
+		mc_p[e_desta][i] = get_cost(find_dest_idx(a, b.data[from_head(b, -i)]),
+				a.size);
 		i++;
 	}
 	i = 0;

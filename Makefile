@@ -38,6 +38,11 @@ LIBFT_DIR         := $(EXTERNAL_DIR)/libs/libft
 LIBFT_INCLUDE_DIR := $(LIBFT_DIR)/include
 LIBFT             := $(LIBFT_DIR)/build/lib/libft.a
 
+# external tools
+VISUALIZER_DIR       := $(EXTERNAL_DIR)/tools/push_swap_visualizer
+VISUALIZER_BUILD_DIR := $(VISUALIZER_DIR)/build
+VISUALIZER           := $(VISUALIZER_BUILD_DIR)/bin/visualizer
+
 # dist
 DIST_DIR := $(BUILD_DIR)/dist
 
@@ -120,6 +125,15 @@ endif
 $(LIBFT): | $(LIBFT_DIR)
 	$(MAKE) -C $(LIBFT_DIR)
 
+# build visualizer (opt-in, not part of `all`)
+visualizer: $(VISUALIZER)
+
+$(VISUALIZER):
+	cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+		-DCMAKE_CXX_FLAGS="-Wno-error=ignored-attributes" \
+		-S $(VISUALIZER_DIR) -B $(VISUALIZER_BUILD_DIR)
+	$(MAKE) -C $(VISUALIZER_BUILD_DIR)
+
 # create source obj directory
 $(SRC_OBJ_DIR): | $(BUILD_DIR)
 	mkdir -p $(SRC_OBJ_DIR)
@@ -197,4 +211,4 @@ endif
 # full rebuild
 re: fclean all
 
-.PHONY: all init stage dist test clean fclean re
+.PHONY: all init stage dist test clean fclean re visualizer

@@ -1,3 +1,6 @@
 [submodule "external/libs/libft"]
 	path = external/libs/libft
 	url = https://github.com/codingvivi/42-libft
+[submodule "external/tools/push_swap_visualizer"]
+	path = external/tools/push_swap_visualizer
+	url = https://github.com/o-reo/push_swap_visualizer.git
