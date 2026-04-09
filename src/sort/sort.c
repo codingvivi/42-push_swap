@@ -6,11 +6,12 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 19:07:54 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/09 16:50:09 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/09 19:00:50 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cost_ops.h"
+#include "idx_of_min.h"
 #include "lis.h"
 #include "print_stacks.h"
 #include "push.h"
@@ -162,6 +163,24 @@ static void	sort_into_a(ssize_t **mc, t_stack stks[2])
 	pa(stks);
 }
 
+static void	min_to_top(t_stack stks[2])
+{
+	const t_stack	a = stks[e_a];
+	const size_t	idx_min = idx_of_min(a);
+	size_t			rotates;
+	ssize_t			r_cost;
+	t_op			op;
+
+	if (idx_min != 0)
+	{
+		r_cost = get_rotate_cost(idx_min, a.size);
+		op = pick_a(r_cost);
+		rotates = ps_abs(r_cost);
+		while (rotates--)
+			op(stks);
+	}
+}
+
 bool	sort(t_stack stks[2], bool verbose)
 {
 	ssize_t			**move_costs;
@@ -180,6 +199,7 @@ bool	sort(t_stack stks[2], bool verbose)
 			return (false);
 		sort_into_a(move_costs, stks);
 	}
+	min_to_top(stks);
 	if (verbose)
 		print_stacks(stks);
 	return (true);

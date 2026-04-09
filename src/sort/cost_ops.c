@@ -6,7 +6,7 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 22:56:54 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/09 18:03:25 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/09 18:51:39 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static ssize_t	**init_cost_arr(size_t size)
 	return (arr);
 }
 
-static ssize_t	get_cost(size_t tgt_idx, size_t size)
+ssize_t	get_rotate_cost(size_t tgt_idx, size_t size)
 {
 	ssize_t	cost;
 
@@ -50,6 +50,28 @@ static ssize_t	get_cost(size_t tgt_idx, size_t size)
 	return (cost);
 }
 
+size_t	idx_of_min(const t_stack s)
+{
+	size_t	i;
+	int		i_val;
+	size_t	candidate;
+	int		can_val;
+
+	i = 0;
+	candidate = i;
+	can_val = s.data[from_head(s, -candidate)];
+	while (i < s.size)
+	{
+		i_val = s.data[from_head(s, -i)];
+		if (i_val < can_val)
+		{
+			candidate = i;
+			can_val = s.data[from_head(s, -candidate)];
+		}
+		i++;
+	}
+	return (candidate);
+}
 static size_t	find_dest_idx(const t_stack a, int b_val)
 {
 	size_t	i;
@@ -73,21 +95,7 @@ static size_t	find_dest_idx(const t_stack a, int b_val)
 		i++;
 	}
 	if (!found)
-	{
-		i = 0;
-		candidate = i;
-		can_val = a.data[from_head(a, -candidate)];
-		while (i < a.size)
-		{
-			i_val = a.data[from_head(a, -i)];
-			if (i_val < can_val)
-			{
-				candidate = i;
-				can_val = a.data[from_head(a, -candidate)];
-			}
-			i++;
-		}
-	}
+		candidate = idx_of_min(a);
 	return (candidate);
 }
 
@@ -100,14 +108,14 @@ static void	write_costs(ssize_t **mc_p, const t_stack stks[2])
 	i = 0;
 	while (i < b.size)
 	{
-		mc_p[e_desta][i] = get_cost(find_dest_idx(a, b.data[from_head(b, -i)]),
-				a.size);
+		mc_p[e_desta][i] = get_rotate_cost(find_dest_idx(a, b.data[from_head(b,
+						-i)]), a.size);
 		i++;
 	}
 	i = 0;
 	while (i < b.size)
 	{
-		mc_p[e_topb][i] = get_cost(i, b.size);
+		mc_p[e_topb][i] = get_rotate_cost(i, b.size);
 		i++;
 	}
 }
