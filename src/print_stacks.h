@@ -12,4 +12,4 @@
 
 #include "stacks.h"
 
-void	print_stacks(t_stack stks[2]);
+void	print_stacks(t_stack *stks[2]);

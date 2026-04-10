@@ -17,8 +17,10 @@
 # include <stdbool.h>
 # include <stddef.h>
 
-t_stack	init_stack(size_t cap);
-bool	init_ab(size_t stk_size, t_stack stks[2]);
-bool	init_a(int argc, char **argv, t_stack *a, bool *verbose);
+t_stack	*init_stack(size_t cap);
+void	free_stack(t_stack *sp);
+void	free_stacks(t_stack *stks[2]);
+bool	init_ab(size_t stk_size, t_stack *stks[2]);
+bool	init_a(int argc, char **argv, t_stack *stks[2], bool *verbose);
 
 #endif

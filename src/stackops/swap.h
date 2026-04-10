@@ -15,10 +15,10 @@
 
 # include "stacks.h"
 
-void	sa(t_stack stks[2]);
+void	sa(t_stack *stks[2]);
 
-void	sb(t_stack stks[2]);
+void	sb(t_stack *stks[2]);
 
-void	ss(t_stack stks[2]);
+void	ss(t_stack *stks[2]);
 
 #endif

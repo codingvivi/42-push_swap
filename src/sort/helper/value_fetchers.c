@@ -1,16 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort.h                                             :+:      :+:    :+:   */
+/*   value_fetchers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/01 19:08:15 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/08 00:39:53 by lrain            ###   ########.fr       */
+/*   Created: 2026/04/09 19:16:48 by lrain             #+#    #+#             */
+/*   Updated: 2026/04/09 19:17:03 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stacks.h"
-#include <stdbool.h>
+#include <sys/types.h>
 
-bool	sort(t_stack *stacks[2], bool verbose);
+ssize_t	ps_abs(ssize_t nb)
+{
+	if (nb < 0)
+		nb *= -1;
+	return (nb);
+}
+
+ssize_t	max(ssize_t x, ssize_t y)
+{
+	if (x < y)
+		x = y;
+	return (x);
+}
+
+ssize_t	min(ssize_t x, ssize_t y)
+{
+	if (x > y)
+		x = y;
+	return (x);
+}

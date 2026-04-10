@@ -1,16 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort.h                                             :+:      :+:    :+:   */
+/*   pickop.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/01 19:08:15 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/08 00:39:53 by lrain            ###   ########.fr       */
+/*   Created: 2026/04/09 19:21:33 by lrain             #+#    #+#             */
+/*   Updated: 2026/04/09 19:23:31 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stacks.h"
-#include <stdbool.h>
+#include "pickop.h"
+#include "reverse_rotate.h"
+#include "rotate.h"
 
-bool	sort(t_stack *stacks[2], bool verbose);
+t_op	pick_b(ssize_t n)
+{
+	if (n < 0)
+		return (rrb);
+	return (rb);
+}
+
+t_op	pick_a(ssize_t n)
+{
+	if (n < 0)
+		return (rra);
+	return (ra);
+}
+
+t_op	pick_both(ssize_t n)
+{
+	if (n < 0)
+		return (rrr);
+	return (rr);
+}

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_idx.h"
+#include "idx_of_min.h"
 #include "libft.h"
 #include "stacks.h"
 #include <stdbool.h>
@@ -50,29 +51,7 @@ ssize_t	get_rotate_cost(size_t tgt_idx, size_t size)
 	return (cost);
 }
 
-size_t	idx_of_min(const t_stack s)
-{
-	size_t	i;
-	int		i_val;
-	size_t	candidate;
-	int		can_val;
-
-	i = 0;
-	candidate = i;
-	can_val = s.data[from_head(s, -candidate)];
-	while (i < s.size)
-	{
-		i_val = s.data[from_head(s, -i)];
-		if (i_val < can_val)
-		{
-			candidate = i;
-			can_val = s.data[from_head(s, -candidate)];
-		}
-		i++;
-	}
-	return (candidate);
-}
-static size_t	find_dest_idx(const t_stack a, int b_val)
+static size_t	find_dest_idx(const t_stack *a, int b_val)
 {
 	size_t	i;
 	int		i_val;
@@ -83,50 +62,50 @@ static size_t	find_dest_idx(const t_stack a, int b_val)
 	i = 0;
 	candidate = i;
 	found = false;
-	while (i < a.size)
+	while (i < a->size)
 	{
-		i_val = a.data[from_head(a, -i)];
+		i_val = a->data[from_head(*a, -i)];
 		if (i_val > b_val && (i_val < can_val || !found))
 		{
 			candidate = i;
-			can_val = a.data[from_head(a, -candidate)];
+			can_val = a->data[from_head(*a, -candidate)];
 			found = true;
 		}
 		i++;
 	}
 	if (!found)
-		candidate = idx_of_min(a);
+		candidate = idx_of_min(*a);
 	return (candidate);
 }
 
-static void	write_costs(ssize_t **mc_p, const t_stack stks[2])
+static void	write_costs(ssize_t **mc_p, t_stack *stks[2])
 {
-	const t_stack	a = stks[e_a];
-	const t_stack	b = stks[e_b];
+	const t_stack	*a = stks[e_a];
+	const t_stack	*b = stks[e_b];
 	size_t			i;
 
 	i = 0;
-	while (i < b.size)
+	while (i < b->size)
 	{
-		mc_p[e_desta][i] = get_rotate_cost(find_dest_idx(a, b.data[from_head(b,
-						-i)]), a.size);
+		mc_p[e_desta][i] = get_rotate_cost(find_dest_idx(a, b->data[from_head(*b,
+						-i)]), a->size);
 		i++;
 	}
 	i = 0;
-	while (i < b.size)
+	while (i < b->size)
 	{
-		mc_p[e_topb][i] = get_rotate_cost(i, b.size);
+		mc_p[e_topb][i] = get_rotate_cost(i, b->size);
 		i++;
 	}
 }
 
-ssize_t	**generate_costs(const t_stack stks[2], bool verbose)
+ssize_t	**generate_costs(t_stack *stks[2], bool verbose)
 {
 	ssize_t	**costs;
 	size_t	i;
 	size_t	j;
 
-	costs = init_cost_arr(stks[e_b].size);
+	costs = init_cost_arr(stks[e_b]->size);
 	// TODO free
 	if (!costs)
 		return (NULL);
@@ -137,7 +116,7 @@ ssize_t	**generate_costs(const t_stack stks[2], bool verbose)
 		while (i <= e_desta)
 		{
 			j = 0;
-			while (j < stks[e_b].size)
+			while (j < stks[e_b]->size)
 			{
 				ft_printf("%i\n", costs[i][j]);
 				j++;

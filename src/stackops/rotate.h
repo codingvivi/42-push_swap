@@ -15,8 +15,8 @@
 
 # include "stacks.h"
 
-void	ra(t_stack stks[2]);
-void	rb(t_stack stks[2]);
-void	rr(t_stack stks[2]);
+void	ra(t_stack *stks[2]);
+void	rb(t_stack *stks[2]);
+void	rr(t_stack *stks[2]);
 
 #endif

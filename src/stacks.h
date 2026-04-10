@@ -19,6 +19,7 @@ typedef enum e_stack_idx
 {
 	e_a,
 	e_b,
+	e_both,
 }			t_stack_idx;
 typedef enum e_move_idx
 {

@@ -1,16 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort.h                                             :+:      :+:    :+:   */
+/*   freestacks.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/01 19:08:15 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/08 00:39:53 by lrain            ###   ########.fr       */
+/*   Created: 2026/04/10 20:23:28 by lrain             #+#    #+#             */
+/*   Updated: 2026/04/10 20:23:28 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stacks.h"
-#include <stdbool.h>
+#ifndef FREESTACKS_H
+# define FREESTACKS_H
 
-bool	sort(t_stack *stacks[2], bool verbose);
+# include "stacks.h"
+
+void	free_stack(t_stack *sp);
+void	free_stacks(t_stack *stks[2]);
+
+#endif

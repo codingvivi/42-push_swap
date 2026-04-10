@@ -22,7 +22,7 @@ static int	end_w_err(void);
 int	main(int argc, char **argv)
 {
 	size_t	stack_size;
-	t_stack	stacks[2];
+	t_stack	*stacks[2];
 	bool	verbose;
 
 	verbose = false;
@@ -33,7 +33,7 @@ int	main(int argc, char **argv)
 	if (!init_ab(stack_size, stacks))
 		return (end_w_err());
 	// TODO free
-	if (!init_a(argc, argv, &stacks[e_a], &verbose))
+	if (!init_a(argc, argv, stacks, &verbose))
 		return (end_w_err());
 	if (verbose)
 		print_stacks(stacks);

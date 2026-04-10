@@ -1,16 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort.h                                             :+:      :+:    :+:   */
+/*   sort_into_a.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/01 19:08:15 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/08 00:39:53 by lrain            ###   ########.fr       */
+/*   Created: 2026/04/09 20:00:00 by lrain             #+#    #+#             */
+/*   Updated: 2026/04/09 20:00:00 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stacks.h"
-#include <stdbool.h>
+#ifndef SORT_INTO_A_H
+# define SORT_INTO_A_H
 
-bool	sort(t_stack *stacks[2], bool verbose);
+# include "stacks.h"
+# include <sys/types.h>
+
+void	sort_into_a(ssize_t **mc, t_stack *stks[2]);
+
+#endif

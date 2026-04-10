@@ -20,21 +20,21 @@ void	reverse_rotate(t_stack *s)
 	s->data[s->head] = s->data[from_head(*s, -s->size)];
 }
 
-void	rra(t_stack stks[2])
+void	rra(t_stack *stks[2])
 {
-	reverse_rotate(&stks[e_a]);
+	reverse_rotate(stks[e_a]);
 	ft_printf("rra\n");
 }
 
-void	rrb(t_stack stks[2])
+void	rrb(t_stack *stks[2])
 {
-	reverse_rotate(&stks[e_b]);
+	reverse_rotate(stks[e_b]);
 	ft_printf("rrb\n");
 }
 
-void	rrr(t_stack stks[2])
+void	rrr(t_stack *stks[2])
 {
-	reverse_rotate(&stks[e_a]);
-	reverse_rotate(&stks[e_b]);
+	reverse_rotate(stks[e_a]);
+	reverse_rotate(stks[e_b]);
 	ft_printf("rrr\n");
 }

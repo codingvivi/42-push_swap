@@ -29,21 +29,21 @@ static void	rotate(t_stack *s)
 	s->head = from_head(*s, -1);
 }
 
-void	ra(t_stack stks[2])
+void	ra(t_stack *stks[2])
 {
-	rotate(&stks[e_a]);
+	rotate(stks[e_a]);
 	ft_printf("ra\n");
 }
 
-void	rb(t_stack stks[2])
+void	rb(t_stack *stks[2])
 {
-	rotate(&stks[e_b]);
+	rotate(stks[e_b]);
 	ft_printf("rb\n");
 }
 
-void	rr(t_stack stks[2])
+void	rr(t_stack *stks[2])
 {
-	rotate(&stks[e_a]);
-	rotate(&stks[e_b]);
+	rotate(stks[e_a]);
+	rotate(stks[e_b]);
 	ft_printf("rr\n");
 }

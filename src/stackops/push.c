@@ -26,14 +26,14 @@ static void	push(t_stack *stgt, t_stack *ssrc)
 	ssrc->size--;
 }
 
-void	pa(t_stack stks[2])
+void	pa(t_stack *stks[2])
 {
-	push(&stks[e_a], &stks[e_b]);
+	push(stks[e_a], stks[e_b]);
 	ft_printf("pa\n");
 }
 
-void	pb(t_stack stks[2])
+void	pb(t_stack *stks[2])
 {
-	push(&stks[e_b], &stks[e_a]);
+	push(stks[e_b], stks[e_a]);
 	ft_printf("pb\n");
 }

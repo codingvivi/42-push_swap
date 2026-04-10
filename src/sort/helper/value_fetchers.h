@@ -1,16 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lis.h                                              :+:      :+:    :+:   */
+/*   value_fetchers.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/03 23:36:22 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/03 23:36:22 by lrain            ###   ########.fr       */
+/*   Created: 2026/04/09 19:15:13 by lrain             #+#    #+#             */
+/*   Updated: 2026/04/09 19:18:59 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stacks.h"
 #include <sys/types.h>
 
-t_subseq	lis_tabulation(t_stack s);
+ssize_t	ps_abs(ssize_t nb);
+
+ssize_t	max(ssize_t x, ssize_t y);
+
+ssize_t	min(ssize_t x, ssize_t y);

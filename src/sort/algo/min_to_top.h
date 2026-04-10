@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cost_ops.h                                         :+:      :+:    :+:   */
+/*   min_to_top.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/07 22:59:32 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/09 18:51:56 by lrain            ###   ########.fr       */
+/*   Created: 2026/04/09 20:45:00 by lrain             #+#    #+#             */
+/*   Updated: 2026/04/09 20:45:00 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stacks.h"
-#include <stdbool.h>
-#include <sys/types.h>
+#ifndef MIN_TO_TOP_H
+# define MIN_TO_TOP_H
 
-ssize_t	get_rotate_cost(size_t tgt_idx, size_t size);
-ssize_t	**generate_costs(const t_stack stks[2], bool verbose);
+# include "stacks.h"
+
+void	min_to_top(t_stack *stks[2]);
+
+#endif

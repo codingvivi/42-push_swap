@@ -1,16 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort.h                                             :+:      :+:    :+:   */
+/*   freearr.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/01 19:08:15 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/08 00:39:53 by lrain            ###   ########.fr       */
+/*   Created: 2026/04/10 18:16:15 by lrain             #+#    #+#             */
+/*   Updated: 2026/04/10 19:40:50 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stacks.h"
-#include <stdbool.h>
+#include "freearr.h"
+#include "stdlib.h"
 
-bool	sort(t_stack *stacks[2], bool verbose);
+void	freearr(void **arr, size_t len, t_free_membr_fn freefn)
+{
+	size_t	i;
+
+	i = 0;
+	if (arr)
+	{
+		while (i < len)
+		{
+			if (arr[i])
+			{
+				freefn(arr[i]);
+				arr[i] = NULL;
+			}
+			i++;
+		}
+		free(arr);
+	}
+}

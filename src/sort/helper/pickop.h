@@ -1,16 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort.h                                             :+:      :+:    :+:   */
+/*   pickop.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/01 19:08:15 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/08 00:39:53 by lrain            ###   ########.fr       */
+/*   Created: 2026/04/09 19:22:19 by lrain             #+#    #+#             */
+/*   Updated: 2026/04/09 19:24:28 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stacks.h"
-#include <stdbool.h>
+#include <sys/types.h>
 
-bool	sort(t_stack *stacks[2], bool verbose);
+typedef void	(*t_op)(t_stack *[2]);
+
+t_op			pick_b(ssize_t n);
+
+t_op			pick_a(ssize_t n);
+
+t_op			pick_both(ssize_t n);

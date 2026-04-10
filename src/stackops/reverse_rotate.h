@@ -16,8 +16,8 @@
 # include "stacks.h"
 
 void	reverse_rotate(t_stack *s);
-void	rra(t_stack stks[2]);
-void	rrb(t_stack stks[2]);
-void	rrr(t_stack stks[2]);
+void	rra(t_stack *stks[2]);
+void	rrb(t_stack *stks[2]);
+void	rrr(t_stack *stks[2]);
 
 #endif

@@ -49,11 +49,15 @@ DIST_DIR := $(BUILD_DIR)/dist
 INCLUDES = -I./$(SRC_DIR) \
            -I./$(SRC_DIR)/init \
            -I./$(SRC_DIR)/sort \
+           -I./$(SRC_DIR)/sort/algo \
+           -I./$(SRC_DIR)/sort/helper \
            -I./$(SRC_DIR)/stackops \
            -I$(LIBFT_INCLUDE_DIR)
 
 # nested layout - single source of truth for both dev and turnin
 FILES = main \
+        freearr \
+        freestacks \
         print_stacks \
         init/init \
         init/safe_ft_atoi \
@@ -63,10 +67,18 @@ FILES = main \
         stackops/reverse_rotate \
         stackops/swap \
         sort/sort \
-        sort/lis \
-        sort/cost_ops
+        sort/algo/push_non_lis \
+        sort/helper/cost_ops \
+        sort/helper/pickop \
+        sort/helper/value_fetchers \
+        sort/helper/idx_of_min \
+        sort/helper/prepend \
+        sort/algo/sort_into_a \
+        sort/algo/min_to_top
 
 HEADERS = stacks \
+          freearr \
+          freestacks \
           print_stacks \
           init/init \
           init/safe_ft_atoi \
@@ -76,8 +88,14 @@ HEADERS = stacks \
           stackops/reverse_rotate \
           stackops/swap \
           sort/sort \
-          sort/lis \
-          sort/cost_ops
+          sort/algo/push_non_lis \
+          sort/helper/cost_ops \
+          sort/helper/pickop \
+          sort/helper/value_fetchers \
+          sort/helper/idx_of_min \
+          sort/helper/prepend \
+          sort/algo/sort_into_a \
+          sort/algo/min_to_top
 
 TEST_FILES = \
             main \
