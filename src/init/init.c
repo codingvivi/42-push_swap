@@ -6,10 +6,11 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 00:39:17 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/10 20:36:34 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/10 22:57:10 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "freecharr.h"
 #include "freestacks.h"
 #include "libft.h"
 #include "safe_ft_atoi.h"
@@ -28,7 +29,10 @@ t_stack	*init_stack(size_t cap)
 	*sp = (t_stack){.data = malloc(cap * sizeof(int)), .head = 0, .size = 0,
 		.cap = cap};
 	if (!sp->data)
+	{
 		free_stack(sp);
+		sp = NULL;
+	}
 	return (sp);
 }
 
@@ -41,6 +45,7 @@ bool	init_ab(size_t stk_size, t_stack *stks[2])
 	if (!stks[e_b])
 	{
 		free_stack(stks[e_a]);
+		stks[e_a] = NULL;
 		return (false);
 	}
 	return (true);
@@ -72,8 +77,20 @@ static bool	parse_args(int argc, char **argv, t_stack *a, bool *verbose)
 	while (i < a->cap)
 	{
 		if (!safe_ft_atoi(usr_in[i], &a->data[a->cap - 1 - i]))
+		{
+			if (argc == 2)
+			{
+				freecharr(usr_in);
+				usr_in = NULL;
+			}
 			return (false);
+		}
 		i++;
+	}
+	if (argc == 2)
+	{
+		freecharr(usr_in);
+		usr_in = NULL;
 	}
 	a->head = a->cap - 1;
 	a->size = a->cap;
@@ -85,6 +102,7 @@ bool	init_a(int argc, char **argv, t_stack *stks[2], bool *verbose)
 	if (!parse_args(argc, argv, stks[e_a], verbose))
 	{
 		free_stacks(stks);
+		stks = NULL;
 		return (false);
 	}
 	return (true);

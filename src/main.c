@@ -6,7 +6,7 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 17:26:20 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/09 16:33:24 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/10 23:08:49 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,18 @@ int	main(int argc, char **argv)
 	stack_size = argc - 1;
 	if (argc < 2)
 		return (end_w_err());
-	// TODO free
 	if (!init_ab(stack_size, stacks))
 		return (end_w_err());
-	// TODO free
 	if (!init_a(argc, argv, stacks, &verbose))
 		return (end_w_err());
 	if (verbose)
 		print_stacks(stacks);
-	// TODO free
 	if (!sort(stacks, verbose))
+	{
+		free_stacks(stacks);
 		return (end_w_err());
-	;
+	}
+	free_stacks(stacks);
 	return (0);
 }
 

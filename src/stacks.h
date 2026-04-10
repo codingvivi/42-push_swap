@@ -6,7 +6,7 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 00:04:31 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/08 17:00:32 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/10 23:09:18 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stddef.h>
 # include <sys/types.h>
+
 typedef enum e_stack_idx
 {
 	e_a,

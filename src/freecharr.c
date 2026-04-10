@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   freearr.c                                          :+:      :+:    :+:   */
+/*   freecharr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/10 18:16:15 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/10 22:45:16 by lrain            ###   ########.fr       */
+/*   Created: 2026/04/10 22:46:17 by lrain             #+#    #+#             */
+/*   Updated: 2026/04/10 23:07:30 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "freearr.h"
-#include "stdlib.h"
 #include <stddef.h>
+#include <stdlib.h>
 
-void	freearr(void **arr, size_t len, t_free_membr_fn freefn)
+void	freecharr(char **arr)
 {
 	size_t	i;
 
 	i = 0;
 	if (arr)
 	{
-		while (i < len)
+		while (arr[i])
 		{
-			if (arr[i])
-			{
-				freefn(arr[i]);
-				arr[i] = NULL;
-			}
+			free(arr[i]);
+			arr[i] = NULL;
 			i++;
 		}
-		free(arr);
+		free((void *)arr);
+		arr = NULL;
 	}
 }

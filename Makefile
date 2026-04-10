@@ -57,6 +57,7 @@ INCLUDES = -I./$(SRC_DIR) \
 # nested layout - single source of truth for both dev and turnin
 FILES = main \
         freearr \
+        freecharr \
         freestacks \
         print_stacks \
         init/init \
@@ -78,6 +79,7 @@ FILES = main \
 
 HEADERS = stacks \
           freearr \
+          freecharr \
           freestacks \
           print_stacks \
           init/init \

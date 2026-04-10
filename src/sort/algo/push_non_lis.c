@@ -6,10 +6,11 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 23:34:32 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/09 20:20:53 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/10 22:04:50 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "freearr.h"
 #include "get_idx.h"
 #include "push.h"
 #include "rotate.h"
@@ -104,5 +105,6 @@ bool	push_non_lis(t_stack *stks[2])
 	if (!lis.seq)
 		return (false);
 	push_or_rotate(stks, lis);
+	free(lis.seq);
 	return (true);
 }

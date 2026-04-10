@@ -6,10 +6,11 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 22:56:54 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/09 18:51:39 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/10 23:10:04 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "freearr.h"
 #include "get_idx.h"
 #include "idx_of_min.h"
 #include "libft.h"
@@ -32,9 +33,12 @@ static ssize_t	**init_cost_arr(size_t size)
 	while (i <= e_desta)
 	{
 		arr[i] = malloc(size * sizeof(ssize_t));
-		// TODO free
 		if (!arr[i])
+		{
+			freearr((void **)arr, i, &free);
+			arr = NULL;
 			return (NULL);
+		}
 		i++;
 	}
 	return (arr);
@@ -87,8 +91,8 @@ static void	write_costs(ssize_t **mc_p, t_stack *stks[2])
 	i = 0;
 	while (i < b->size)
 	{
-		mc_p[e_desta][i] = get_rotate_cost(find_dest_idx(a, b->data[from_head(*b,
-						-i)]), a->size);
+		mc_p[e_desta][i] = get_rotate_cost(find_dest_idx(a,
+					b->data[from_head(*b, -i)]), a->size);
 		i++;
 	}
 	i = 0;
@@ -106,7 +110,6 @@ ssize_t	**generate_costs(t_stack *stks[2], bool verbose)
 	size_t	j;
 
 	costs = init_cost_arr(stks[e_b]->size);
-	// TODO free
 	if (!costs)
 		return (NULL);
 	write_costs(costs, stks);

@@ -6,17 +6,19 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 19:07:54 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/09 20:19:46 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/10 22:58:37 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cost_ops.h"
+#include "freearr.h"
 #include "min_to_top.h"
 #include "print_stacks.h"
 #include "push_non_lis.h"
 #include "sort_into_a.h"
 #include "stacks.h"
 #include <stdbool.h>
+#include <stdlib.h>
 #include <sys/types.h>
 
 bool	sort(t_stack *stks[2], bool verbose)
@@ -33,6 +35,8 @@ bool	sort(t_stack *stks[2], bool verbose)
 		if (!move_costs)
 			return (false);
 		sort_into_a(move_costs, stks);
+		freearr((void **)move_costs, 2, &free);
+		move_costs = NULL;
 	}
 	min_to_top(stks);
 	if (verbose)
