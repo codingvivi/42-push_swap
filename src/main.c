@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "freestacks.h"
+#include "get_args.h"
 #include "init.h"
 #include "libft.h"
 #include "print_stacks.h"
@@ -31,7 +33,7 @@ int	main(int argc, char **argv)
 		return (end_w_err());
 	if (!init_ab(stack_size, stacks))
 		return (end_w_err());
-	if (!init_a(argc, argv, stacks, &verbose))
+	if (!get_args(argc, argv, stacks, &verbose))
 		return (end_w_err());
 	if (verbose)
 		print_stacks(stacks);

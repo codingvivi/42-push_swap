@@ -60,7 +60,8 @@ FILES = main \
         freecharr \
         freestacks \
         print_stacks \
-        init/init \
+        init/init_stacks \
+        init/get_args \
         init/safe_ft_atoi \
         stackops/get_idx \
         stackops/push \
@@ -83,6 +84,7 @@ HEADERS = stacks \
           freestacks \
           print_stacks \
           init/init \
+          init/get_args \
           init/safe_ft_atoi \
           stackops/get_idx \
           stackops/push \

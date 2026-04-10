@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.h                                             :+:      :+:    :+:   */
+/*   get_args.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/02 00:39:17 by lrain             #+#    #+#             */
+/*   Created: 2026/04/11 00:00:00 by lrain             #+#    #+#             */
 /*   Updated: 2026/04/11 00:00:00 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INIT_H
-# define INIT_H
+#ifndef GET_ARGS_H
+# define GET_ARGS_H
 
 # include "stacks.h"
 # include <stdbool.h>
-# include <stddef.h>
 
-t_stack	*init_stack(size_t cap);
-bool	init_ab(size_t stk_size, t_stack *stks[2]);
+bool	get_args(int argc, char **argv, t_stack *stks[2], bool *verbose);
 
 #endif

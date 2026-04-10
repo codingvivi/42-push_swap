@@ -16,6 +16,12 @@
 # include <stddef.h>
 # include <sys/types.h>
 
+# ifndef NDEBUG
+#  define PS_DEBUG 1
+# else
+#  define PS_DEBUG 0
+# endif
+
 typedef enum e_stack_idx
 {
 	e_a,

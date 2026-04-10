@@ -6,7 +6,7 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 23:34:32 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/10 22:04:50 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/11 01:33:59 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,19 @@
 #include "rotate.h"
 #include "stacks.h"
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdlib.h>
 
 t_subseq	lis_tabulation(const t_stack *s)
 {
-	const int	n = s->size;
-	int			dp[n];
-	int			parent[n];
-	int			max_len;
-	int			max_idx;
-	int			idx;
-	int			i;
-	int			*seq;
+	const size_t	n = s->size;
+	size_t			dp[n];
+	ssize_t			parent[n];
+	size_t			max_len;
+	ssize_t			max_idx;
+	ssize_t			idx;
+	size_t			i;
+	int				*seq;
 
 	if (n == 0)
 		return ((t_subseq){NULL, 0});
@@ -35,7 +36,7 @@ t_subseq	lis_tabulation(const t_stack *s)
 	{
 		dp[i] = 1;
 		parent[i] = -1;
-		for (int j = 0; j < i; j++)
+		for (size_t j = 0; j < i; j++)
 		{
 			if (s->data[from_head(*s, -j)] < s->data[from_head(*s, -i)] && dp[j]
 				+ 1 > dp[i])
