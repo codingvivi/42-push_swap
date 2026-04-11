@@ -70,6 +70,7 @@ FILES = main \
         stackops/swap \
         sort/sort \
         sort/algo/push_non_lis \
+        sort/algo/lis_tabulation \
         sort/helper/cost_ops \
         sort/helper/pickop \
         sort/helper/value_fetchers \
@@ -93,6 +94,7 @@ HEADERS = stacks \
           stackops/swap \
           sort/sort \
           sort/algo/push_non_lis \
+          sort/algo/lis_tabulation \
           sort/helper/cost_ops \
           sort/helper/pickop \
           sort/helper/value_fetchers \
