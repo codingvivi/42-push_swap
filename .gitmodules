@@ -4,3 +4,6 @@
 [submodule "external/tools/push_swap_visualizer"]
 	path = external/tools/push_swap_visualizer
 	url = https://github.com/o-reo/push_swap_visualizer.git
+[submodule "external/test/push_swap-tester"]
+	path = external/test/push_swap-tester
+	url = https://github.com/gemartin99/Push-Swap-Tester
