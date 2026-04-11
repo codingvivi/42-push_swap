@@ -6,7 +6,7 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 22:56:54 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/10 23:10:04 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/11 21:53:37 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static size_t	find_dest_idx(const t_stack *a, int b_val)
 	while (i < a->size)
 	{
 		i_val = a->data[from_head(*a, -i)];
-		if (i_val > b_val && (i_val < can_val || !found))
+		if (i_val > b_val && (!found || i_val < can_val))
 		{
 			candidate = i;
 			can_val = a->data[from_head(*a, -candidate)];
