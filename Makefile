@@ -42,6 +42,8 @@ LIBFT             := $(LIBFT_DIR)/build/lib/libft.a
 VISUALIZER_DIR       := $(EXTERNAL_DIR)/tools/push_swap_visualizer
 VISUALIZER_BUILD_DIR := $(VISUALIZER_DIR)/build
 VISUALIZER           := $(VISUALIZER_BUILD_DIR)/bin/visualizer
+TESTER_DIR           := $(EXTERNAL_DIR)/tools/push_swap_tester
+TESTER_BUILD_DIR     := $(BUILD_DIR)/tester
 
 # dist
 DIST_DIR := $(BUILD_DIR)/dist
@@ -235,4 +237,14 @@ endif
 # full rebuild
 re: fclean all
 
-.PHONY: all init stage dist test clean fclean re visualizer
+# build tester: stage, compile in dist, copy tester files
+tester: stage
+	$(MAKE) -C $(DIST_DIR)/$(RELEASE_BASE)
+	mkdir -p $(TESTER_BUILD_DIR)
+	cp $(DIST_DIR)/$(RELEASE_BASE)/push_swap $(TESTER_BUILD_DIR)/
+	cp $(TESTER_DIR)/checker_linux $(TESTER_DIR)/pro_checker $(TESTER_BUILD_DIR)/
+	cp $(TESTER_DIR)/push_swap_test_linux.sh $(TESTER_DIR)/push_swap_test.sh $(TESTER_BUILD_DIR)/
+	chmod +x $(TESTER_BUILD_DIR)/checker_linux $(TESTER_BUILD_DIR)/pro_checker
+	chmod +x $(TESTER_BUILD_DIR)/push_swap_test_linux.sh $(TESTER_BUILD_DIR)/push_swap_test.sh
+
+.PHONY: all init stage dist test clean fclean re visualizer tester

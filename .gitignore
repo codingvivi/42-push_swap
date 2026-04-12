@@ -6,6 +6,7 @@ build/
 *.out
 CMakeLists.txt
 compile_commands.json
+*.ini
 
 # trash
 *.bar

@@ -33,8 +33,6 @@ hrun bargs="" rargs="":
     make hclean
     just brun "{{bargs}}" "{{rargs}}"
 
-
-
 visualize *args:
     make visualizer
     external/tools/push_swap_visualizer/build/bin/visualizer {{args}}
@@ -51,3 +49,7 @@ visualize-deps:
         libudev-devel \
         freetype2-devel \
         sfml2-devel
+
+test:
+    make tester
+    cd build/tester && bash push_swap_test_linux.sh
