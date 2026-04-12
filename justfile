@@ -53,3 +53,11 @@ visualize-deps:
 test:
     make tester
     cd build/tester && bash push_swap_test_linux.sh
+
+test-yfu:
+    make tester-yfu
+    cd build/tester-yfu/tester && bash basic_test.sh
+
+test-yfu-loop size="100" count="10":
+    make tester-yfu
+    cd build/tester-yfu/tester && bash loop.sh {{size}} {{count}}

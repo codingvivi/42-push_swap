@@ -7,3 +7,6 @@
 [submodule "external/test/push_swap-tester"]
 	path = external/test/push_swap-tester
 	url = https://github.com/gemartin99/Push-Swap-Tester
+[submodule "external/test/push_swap_tester-yfu"]
+	path = external/test/push_swap_tester-yfu
+	url = https://github.com/LeoFu9487/push_swap_tester

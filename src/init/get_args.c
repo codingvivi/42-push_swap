@@ -6,12 +6,13 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 00:00:00 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/11 00:53:48 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/12 02:35:34 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "freecharr.h"
 #include "freestacks.h"
+#include "get_idx.h"
 #include "libft.h"
 #include "safe_ft_atoi.h"
 #include "stacks.h"
@@ -78,9 +79,29 @@ static bool	parse_args(int argc, char **argv, t_stack *a, bool *verbose)
 	return (write_args(usr_in, a, argc));
 }
 
+static bool	has_dupes(t_stack *a)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (i < a->size)
+	{
+		j = i + 1;
+		while (j < a->size)
+		{
+			if (a->data[from_head(*a, -i)] == a->data[from_head(*a, -j)])
+				return (true);
+			j++;
+		}
+		i++;
+	}
+	return (false);
+}
+
 bool	get_args(int argc, char **argv, t_stack *stks[2], bool *verbose)
 {
-	if (!parse_args(argc, argv, stks[e_a], verbose))
+	if (!parse_args(argc, argv, stks[e_a], verbose) || has_dupes(stks[e_a]))
 	{
 		free_stacks(stks);
 		stks = NULL;

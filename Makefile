@@ -44,11 +44,14 @@ VISUALIZER_BUILD_DIR := $(VISUALIZER_DIR)/build
 VISUALIZER           := $(VISUALIZER_BUILD_DIR)/bin/visualizer
 TESTER_DIR           := $(EXTERNAL_DIR)/tools/push_swap_tester
 TESTER_BUILD_DIR     := $(BUILD_DIR)/tester
+TESTER_YFU_DIR       := $(EXTERNAL_DIR)/test/push_swap_tester-yfu
+TESTER_YFU_BUILD_DIR := $(BUILD_DIR)/tester-yfu
 
 # dist
 DIST_DIR := $(BUILD_DIR)/dist
 
 INCLUDES = -I./$(SRC_DIR) \
+           -I./$(SRC_DIR)/free \
            -I./$(SRC_DIR)/init \
            -I./$(SRC_DIR)/sort \
            -I./$(SRC_DIR)/sort/algo \
@@ -58,9 +61,9 @@ INCLUDES = -I./$(SRC_DIR) \
 
 # nested layout - single source of truth for both dev and turnin
 FILES = main \
-        freearr \
-        freecharr \
-        freestacks \
+        free/freearr \
+        free/freecharr \
+        free/freestacks \
         print_stacks \
         init/init_stacks \
         init/get_args \
@@ -82,9 +85,9 @@ FILES = main \
         sort/algo/min_to_top
 
 HEADERS = stacks \
-          freearr \
-          freecharr \
-          freestacks \
+          free/freearr \
+          free/freecharr \
+          free/freestacks \
           print_stacks \
           init/init \
           init/get_args \
@@ -247,4 +250,15 @@ tester: stage
 	chmod +x $(TESTER_BUILD_DIR)/checker_linux $(TESTER_BUILD_DIR)/pro_checker
 	chmod +x $(TESTER_BUILD_DIR)/push_swap_test_linux.sh $(TESTER_BUILD_DIR)/push_swap_test.sh
 
-.PHONY: all init stage dist test clean fclean re visualizer tester
+# build yfu tester: stage, compile in dist, stage tester dir with binary one level up
+# yfu scripts hardcode ROOT=.. and call `make -C $ROOT`, so we place push_swap and a
+# no-op Makefile in tester-yfu/ and copy the submodule contents into tester-yfu/tester/.
+tester-yfu: stage
+	$(MAKE) -C $(DIST_DIR)/$(RELEASE_BASE)
+	$(RM) $(TESTER_YFU_BUILD_DIR)
+	mkdir -p $(TESTER_YFU_BUILD_DIR)
+	cp $(DIST_DIR)/$(RELEASE_BASE)/push_swap $(TESTER_YFU_BUILD_DIR)/
+	printf 'all:\n\t@:\n' > $(TESTER_YFU_BUILD_DIR)/Makefile
+	cp -r $(TESTER_YFU_DIR) $(TESTER_YFU_BUILD_DIR)/tester
+
+.PHONY: all init stage dist test clean fclean re visualizer tester tester-yfu
