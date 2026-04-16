@@ -21,6 +21,49 @@
 #include <stdlib.h>
 #include <sys/types.h>
 
+static ssize_t	**init_cost_arr(size_t size);
+static size_t	find_dest_idx(const t_stack *a, int b_val);
+static void		write_costs(ssize_t **mc_p, t_stack *stks[2]);
+
+ssize_t	get_rotate_cost(size_t tgt_idx, size_t size)
+{
+	ssize_t	cost;
+
+	if (tgt_idx <= ((size - 1) / 2))
+		cost = tgt_idx;
+	else
+		cost = -(ssize_t)(size - tgt_idx);
+	return (cost);
+}
+
+ssize_t	**generate_costs(t_stack *stks[2], bool verbose)
+{
+	ssize_t	**costs;
+	size_t	i;
+	size_t	j;
+
+	costs = init_cost_arr(stks[e_b]->size);
+	if (!costs)
+		return (NULL);
+	write_costs(costs, stks);
+	if (verbose)
+	{
+		i = 0;
+		while (i <= e_desta)
+		{
+			j = 0;
+			while (j < stks[e_b]->size)
+			{
+				ft_printf("%i\n", costs[i][j]);
+				j++;
+			}
+			ft_printf("\n\n");
+			i++;
+		}
+	}
+	return (costs);
+}
+
 static ssize_t	**init_cost_arr(size_t size)
 {
 	ssize_t	**arr;
@@ -42,17 +85,6 @@ static ssize_t	**init_cost_arr(size_t size)
 		i++;
 	}
 	return (arr);
-}
-
-ssize_t	get_rotate_cost(size_t tgt_idx, size_t size)
-{
-	ssize_t	cost;
-
-	if (tgt_idx <= ((size - 1) / 2))
-		cost = tgt_idx;
-	else
-		cost = -(ssize_t)(size - tgt_idx);
-	return (cost);
 }
 
 static size_t	find_dest_idx(const t_stack *a, int b_val)
@@ -101,32 +133,4 @@ static void	write_costs(ssize_t **mc_p, t_stack *stks[2])
 		mc_p[e_topb][i] = get_rotate_cost(i, b->size);
 		i++;
 	}
-}
-
-ssize_t	**generate_costs(t_stack *stks[2], bool verbose)
-{
-	ssize_t	**costs;
-	size_t	i;
-	size_t	j;
-
-	costs = init_cost_arr(stks[e_b]->size);
-	if (!costs)
-		return (NULL);
-	write_costs(costs, stks);
-	if (verbose)
-	{
-		i = 0;
-		while (i <= e_desta)
-		{
-			j = 0;
-			while (j < stks[e_b]->size)
-			{
-				ft_printf("%i\n", costs[i][j]);
-				j++;
-			}
-			ft_printf("\n\n");
-			i++;
-		}
-	}
-	return (costs);
 }

@@ -14,15 +14,7 @@
 #include "libft.h"
 #include "stacks.h"
 
-static void	swap(t_stack *s)
-{
-	const int	buf = s->data[s->head];
-
-	if (s->size < 2)
-		return ;
-	s->data[s->head] = s->data[from_head(*s, -1)];
-	s->data[from_head(*s, -1)] = buf;
-}
+static void	swap(t_stack *s);
 
 void	sa(t_stack *stks[2])
 {
@@ -41,4 +33,14 @@ void	ss(t_stack *stks[2])
 	swap(stks[e_a]);
 	swap(stks[e_b]);
 	ft_printf("ss\n");
+}
+
+static void	swap(t_stack *s)
+{
+	const int	buf = s->data[s->head];
+
+	if (s->size < 2)
+		return ;
+	s->data[s->head] = s->data[from_head(*s, -1)];
+	s->data[from_head(*s, -1)] = buf;
 }

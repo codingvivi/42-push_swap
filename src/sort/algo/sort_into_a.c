@@ -17,6 +17,32 @@
 #include <stddef.h>
 #include <sys/types.h>
 
+static ssize_t		combined_cost(ssize_t topb_c, ssize_t desta_c);
+static t_idx_cost	cheapest_idx(ssize_t **mc, size_t size_b);
+static void			init_ops(t_op ops[3], ssize_t mags[3],
+						const ssize_t rots[2]);
+
+void	sort_into_a(ssize_t **mc, t_stack *stks[2])
+{
+	const t_idx_cost	cheapest = cheapest_idx(mc, stks[e_b]->size);
+	ssize_t				rotations[2];
+	t_op				ops[3];
+	ssize_t				magnitudes[3];
+	ssize_t				i;
+
+	rotations[e_a] = mc[e_desta][cheapest.idx];
+	rotations[e_b] = mc[e_topb][cheapest.idx];
+	init_ops(ops, magnitudes, rotations);
+	i = e_both;
+	while (i >= e_a)
+	{
+		while (magnitudes[i]-- > 0)
+			ops[i](stks);
+		i--;
+	}
+	pa(stks);
+}
+
 static ssize_t	combined_cost(ssize_t topb_c, ssize_t desta_c)
 {
 	if (topb_c > 0)
@@ -61,25 +87,4 @@ static void	init_ops(t_op ops[3], ssize_t mags[3], const ssize_t rots[2])
 		mags[e_a] -= mags[e_both];
 		mags[e_b] -= mags[e_both];
 	}
-}
-
-void	sort_into_a(ssize_t **mc, t_stack *stks[2])
-{
-	const t_idx_cost	cheapest = cheapest_idx(mc, stks[e_b]->size);
-	ssize_t				rotations[2];
-	t_op				ops[3];
-	ssize_t				magnitudes[3];
-	ssize_t				i;
-
-	rotations[e_a] = mc[e_desta][cheapest.idx];
-	rotations[e_b] = mc[e_topb][cheapest.idx];
-	init_ops(ops, magnitudes, rotations);
-	i = e_both;
-	while (i >= e_a)
-	{
-		while (magnitudes[i]-- > 0)
-			ops[i](stks);
-		i--;
-	}
-	pa(stks);
 }

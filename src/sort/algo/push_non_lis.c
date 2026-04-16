@@ -18,6 +18,20 @@
 #include <stddef.h>
 #include <stdlib.h>
 
+static bool	is_in_lis(int val, t_subseq lis);
+static void	push_or_rotate(t_stack *stks[2], t_subseq lis);
+
+bool	push_non_lis(t_stack *stks[2])
+{
+	const t_subseq	lis = lis_tabulation(stks[e_a]);
+
+	if (!lis.seq)
+		return (false);
+	push_or_rotate(stks, lis);
+	free(lis.seq);
+	return (true);
+}
+
 static bool	is_in_lis(int val, t_subseq lis)
 {
 	size_t	j;
@@ -47,15 +61,4 @@ static void	push_or_rotate(t_stack *stks[2], t_subseq lis)
 			pb(stks);
 		i++;
 	}
-}
-
-bool	push_non_lis(t_stack *stks[2])
-{
-	const t_subseq	lis = lis_tabulation(stks[e_a]);
-
-	if (!lis.seq)
-		return (false);
-	push_or_rotate(stks, lis);
-	free(lis.seq);
-	return (true);
 }

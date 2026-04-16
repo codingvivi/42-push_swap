@@ -14,6 +14,26 @@
 #include "stdbool.h"
 #include <limits.h>
 
+static int	ft_isspace(int i);
+static bool	safe_converter(const char **sp, int **np, const int neg);
+
+bool	safe_ft_atoi(const char *str, int *nb)
+{
+	int	neg;
+
+	*nb = 0;
+	neg = 0;
+	while (ft_isspace(*str))
+		str++;
+	if (*str == '+' || *str == '-')
+	{
+		if (*str == '-')
+			neg = 1;
+		str++;
+	}
+	return (safe_converter(&str, &nb, neg));
+}
+
 static int	ft_isspace(int i)
 {
 	unsigned int		temp;
@@ -44,21 +64,4 @@ static bool	safe_converter(const char **sp, int **np, const int neg)
 	if (!ft_isspace(**sp) && **sp != '\0')
 		return (false);
 	return (true);
-}
-
-bool	safe_ft_atoi(const char *str, int *nb)
-{
-	int	neg;
-
-	*nb = 0;
-	neg = 0;
-	while (ft_isspace(*str))
-		str++;
-	if (*str == '+' || *str == '-')
-	{
-		if (*str == '-')
-			neg = 1;
-		str++;
-	}
-	return (safe_converter(&str, &nb, neg));
 }

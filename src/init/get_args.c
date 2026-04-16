@@ -19,6 +19,22 @@
 #include <stdbool.h>
 #include <stddef.h>
 
+static void	parse_verbose(int *argc, char ***argv, t_stack *a, bool *verbose);
+static bool	write_args(char **usr_in, t_stack *a, int argc);
+static bool	parse_args(int argc, char **argv, t_stack *a, bool *verbose);
+static bool	has_dupes(t_stack *a);
+
+bool	get_args(int argc, char **argv, t_stack *stks[2], bool *verbose)
+{
+	if (!parse_args(argc, argv, stks[e_a], verbose) || has_dupes(stks[e_a]))
+	{
+		free_stacks(stks);
+		stks = NULL;
+		return (false);
+	}
+	return (true);
+}
+
 static void	parse_verbose(int *argc, char ***argv, t_stack *a, bool *verbose)
 {
 	const bool	has_flag_short = ft_strncmp((*argv)[1], "-v", 3) == 0;
@@ -97,15 +113,4 @@ static bool	has_dupes(t_stack *a)
 		i++;
 	}
 	return (false);
-}
-
-bool	get_args(int argc, char **argv, t_stack *stks[2], bool *verbose)
-{
-	if (!parse_args(argc, argv, stks[e_a], verbose) || has_dupes(stks[e_a]))
-	{
-		free_stacks(stks);
-		stks = NULL;
-		return (false);
-	}
-	return (true);
 }

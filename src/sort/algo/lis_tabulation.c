@@ -15,6 +15,35 @@
 #include <stddef.h>
 #include <stdlib.h>
 
+static void			fill_dp(const t_stack *s, size_t *dp, ssize_t *parent);
+static t_idx_cost	find_max_dp(const size_t *dp, size_t n);
+static t_subseq		backtrack(const t_stack *s, const size_t *dp,
+						const ssize_t *parent);
+
+t_subseq	lis_tabulation(const t_stack *s)
+{
+	size_t		*dp;
+	ssize_t		*parent;
+	t_subseq	result;
+
+	if (s->size == 0)
+		return ((t_subseq){NULL, 0});
+	dp = malloc(s->size * sizeof(size_t));
+	if (!dp)
+		return ((t_subseq){NULL, 0});
+	parent = malloc(s->size * sizeof(ssize_t));
+	if (!parent)
+	{
+		free(dp);
+		return ((t_subseq){NULL, 0});
+	}
+	fill_dp(s, dp, parent);
+	result = backtrack(s, dp, parent);
+	free(dp);
+	free(parent);
+	return (result);
+}
+
 static void	fill_dp(const t_stack *s, size_t *dp, ssize_t *parent)
 {
 	size_t	i;
@@ -79,28 +108,4 @@ static t_subseq	backtrack(const t_stack *s, const size_t *dp,
 		idx = parent[idx];
 	}
 	return ((t_subseq){seq, best.cost});
-}
-
-t_subseq	lis_tabulation(const t_stack *s)
-{
-	size_t		*dp;
-	ssize_t		*parent;
-	t_subseq	result;
-
-	if (s->size == 0)
-		return ((t_subseq){NULL, 0});
-	dp = malloc(s->size * sizeof(size_t));
-	if (!dp)
-		return ((t_subseq){NULL, 0});
-	parent = malloc(s->size * sizeof(ssize_t));
-	if (!parent)
-	{
-		free(dp);
-		return ((t_subseq){NULL, 0});
-	}
-	fill_dp(s, dp, parent);
-	result = backtrack(s, dp, parent);
-	free(dp);
-	free(parent);
-	return (result);
 }

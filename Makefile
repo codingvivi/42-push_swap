@@ -1,5 +1,4 @@
 NAME = push_swap
-TEST_NAME = runner
 
 .DEFAULT_GOAL := all
 .SECONDEXPANSION:
@@ -9,7 +8,6 @@ CFLAGS     = -Wall -Wextra -Werror -fPIE
 ifeq ($(TURNIN_RUN),true)
 CFLAGS    += -DNDEBUG
 endif
-TEST_CFLAGS = $(CFLAGS)
 
 RM = rm -rf
 
@@ -19,18 +17,15 @@ RELEASE_BASE = $(basename $(basename $(RELEASE_NAME)))
 
 # code
 SRC_DIR      := src
-TEST_SRC_DIR := test
 
 # build output
 BUILD_DIR    := build
 OBJ_DIR      := $(BUILD_DIR)/obj
 SRC_OBJ_DIR  := $(OBJ_DIR)/src
-TEST_OBJ_DIR := $(OBJ_DIR)/test
 
 # build results
 BIN_DIR      := $(BUILD_DIR)/bin
 SRC_BIN_DIR  := $(BIN_DIR)/src
-TEST_BIN_DIR := $(BIN_DIR)/test
 
 # external libraries
 EXTERNAL_DIR      := external
@@ -108,15 +103,9 @@ HEADERS = stacks \
           sort/algo/sort_into_a \
           sort/algo/min_to_top
 
-TEST_FILES = \
-            main \
-            safe_ft_atoi
-
 SRCS = $(FILES:%=$(SRC_DIR)/%.c)
 HDRS = $(HEADERS:%=$(SRC_DIR)/%.h)
 OBJS = $(FILES:%=$(SRC_OBJ_DIR)/%.o)
-TEST_SRCS = $(TEST_FILES:%=$(TEST_SRC_DIR)/%.c)
-TEST_OBJS = $(TEST_FILES:%=$(TEST_OBJ_DIR)/%.o)
 
 # build
 all: init $(NAME)
@@ -167,17 +156,9 @@ $(VISUALIZER):
 $(SRC_OBJ_DIR): | $(BUILD_DIR)
 	mkdir -p $(SRC_OBJ_DIR)
 
-# create test obj directory
-$(TEST_OBJ_DIR): | $(BUILD_DIR)
-	mkdir -p $(TEST_OBJ_DIR)
-
 # create src bin directory
 $(SRC_BIN_DIR): | $(BUILD_DIR)
 	mkdir -p $(SRC_BIN_DIR)
-
-# create test bin directory
-$(TEST_BIN_DIR): | $(BUILD_DIR)
-	mkdir -p $(TEST_BIN_DIR)
 
 # create build directory
 $(BUILD_DIR):
@@ -191,8 +172,11 @@ $(EXTERNAL_DIR):
 $(DIST_DIR): | $(BUILD_DIR)
 	mkdir -p $(DIST_DIR)
 
-# initialize project structure (no-op in dev; unflatten in turnin)
+# initialize project structure:
+#   - unflattens our own src tree in turnin (via secondary-expansion pattern rules)
+#   - re-nests libft if its fclean has flattened it, so compiles can find libft.h
 init: $(SRCS) $(HDRS) | $(LIBFT_DIR)
+	$(MAKE) -C $(LIBFT_DIR) init
 
 # create flat distribution environment for turnin
 stage: | $(DIST_DIR)
@@ -206,17 +190,6 @@ stage: | $(DIST_DIR)
 # create a distribution tarball with the submission files
 dist: stage
 	tar -czf $(DIST_DIR)/$(RELEASE_NAME) -C $(DIST_DIR) $(RELEASE_BASE)
-
-# build and run tests
-test: $(TEST_NAME)
-
-# link test runner
-$(TEST_NAME): $(NAME) $(TEST_OBJS) | $(TEST_BIN_DIR)
-	$(CC) $(CFLAGS) $(TEST_OBJS) -o $(TEST_BIN_DIR)/$(TEST_NAME)
-
-# compile test files to objects
-$(TEST_OBJ_DIR)/%.o: $(TEST_SRC_DIR)/%.c | $(TEST_OBJ_DIR)
-	$(CC) $(TEST_CFLAGS) $(INCLUDES) -c $< -o $@
 
 # remove object files
 clean:
@@ -261,4 +234,4 @@ tester-yfu: stage
 	printf 'all:\n\t@:\n' > $(TESTER_YFU_BUILD_DIR)/Makefile
 	cp -r $(TESTER_YFU_DIR) $(TESTER_YFU_BUILD_DIR)/tester
 
-.PHONY: all init stage dist test clean fclean re visualizer tester tester-yfu
+.PHONY: all init stage dist clean fclean re visualizer tester tester-yfu

@@ -1,11 +1,249 @@
 _This project has been created as part of the 42 curriculum by lrain_
 
 # push_swap
+
 ## Description
-*to write*
+
+My submission for 42's push swap project!
+
+The rules:
+read a sequence of unordered,
+non duplicate integers
+via cli input,
+return them sorted
+using two stacks (`a` and `b`)
+fixed set of operations,
+aiming for the **shortest possible sequence** of
+moves.
+
+Available operations:
+
+| op | effect |
+| ----- | ------------------------------------------------------ |
+| `sa` | swap the top two elements of `a` |
+| `sb` | swap the top two elements of `b` |
+| `ss` | `sa` and `sb` simultaneously |
+| `pa` | push top of `b` onto `a` |
+| `pb` | push top of `a` onto `b` |
+| `ra` | rotate `a` up by one (top element becomes last) |
+| `rb` | rotate `b` up by one |
+| `rr` | `ra` and `rb` simultaneously |
+| `rra` | reverse-rotate `a` (last element becomes top) |
+| `rrb` | reverse-rotate `b` |
+| `rrr` | `rra` and `rrb` simultaneously |
+
+Benchmark targets (100% validation):
+**100 numbers in < 700 ops**
+and **500 numbers in < 5500 ops**.
 
 ## Instructions
-### Building
 
-## Resources
+### Project layout
+
+The repository uses a nested `src/` layout
+inspired by Pitchfork convention
+for development:
+
+```
+src/
+├── main.c
+├── stacks.h            # shared ring-buffer stack type
+├── init/               # argument parsing + stack construction
+├── stackops/           # the 11 push_swap operations + index helpers
+└── sort/               # sorting strategy, LIS, cost/move selection
+external/libs/libft/    # libft submodule
+docs/42/                # subject + norm PDFs
+tools/                  # helper scripts
+test/                   # nushell-driven test runner (vv_tester.nu)
+```
+
+Headers live next to the `.c` files that define them —
+per the Pitchfork convention,
+`include/` is reserved for public-API headers of libraries,
+and `push_swap` is an executable.
+
+### Dependencies
+
+- `cc` (gcc or clang) and GNU `make`
+- The `libft` submodule at `external/libs/libft`.
+  Clone with `--recursive`,
+  or run `git submodule update --init` after cloning.
+
+*Optionally:*
+
+- `just` to wrap/orchestrate useful commands
+- `visualizer name` to visualize what push swap is doing
+
+### Building & running
+
+```bash
+make                 # dev build → build/bin/src/push_swap
+make re              # clean rebuild
+make clean           # remove object files
+make fclean          # remove all build artifacts
+```
+
+Optional `just` wrappers (refreshes `compile_commands.json` via `bear`):
+
+```bash
+just build             # == bear -- make
+just run ARGS...       # run the compiled binary
+just brun BARGS RARGS  # build, then run
+just crun BARGS RARGS  # make clean, then brun
+just hrun BARGS RARGS  # make hclean, then brun
+```
+
+Run manually:
+
+```bash
+./build/bin/src/push_swap 2 1 3 6 5 8
+# prints the instruction list on stdout
+
+./build/bin/src/push_swap 0 one 2 3
+# Error
+```
+
+or with just:
+
+```bash
+just run 2 1 3 6 5 8
+just run 0 one 2 3
+```
+
+- No arguments
+  → no output,
+  clean exit.
+- Invalid input (non-integer, overflow, duplicates)
+  → `Error\n` on stderr,
+  non-zero exit.
+- Arguments can be passed as separate `argv` entries,
+  or as a single quoted whitespace-separated string
+  (e.g. `"4 67 3 87 23"`).
+
+Validate with a checker:
+
+```bash
+ARG="4 67 3 87 23"
+./build/bin/src/push_swap $ARG | ./checker_linux $ARG
+# OK
+```
+
+### Developing & Evaluating
+
+#### Generating a sane repo directory
+
+#### Turn-in build
+
+The Makefile produces both from a single source of truth:
+
+```bash
+make stage                        # flat tree → build/dist/push_swap_turnin_/
+RELEASE_TAG=v1 make dist          # → push_swap_turnin_v1.tar.gz
+```
+
+#### Testing
+
+Both testers build on top of the staged turn-in tree,
+so they exercise the exact sources that would ship.
+
+```bash
+make tester          # stage + build + stage push_swap_tester scripts in build/tester/
+make tester-yfu      # stage + build + stage yfu's tester in build/tester-yfu/
+```
+
+`just` wrappers run the tester after building it:
+
+```bash
+just test                     # push_swap_tester (push_swap_test_linux.sh)
+just test-yfu                 # yfu's basic_test.sh
+just test-yfu-loop SIZE COUNT # yfu's loop.sh (defaults: 100 10)
+```
+
+#### Visualizer
+
+```bash
+make visualizer              # builds external/tools/push_swap_visualizer
+just visualize-deps          # install build deps (zypper, openSUSE)
+just visualize ARGS...       # make visualizer, then run it with ARGS
+```
+
+## Algorithm
+
+### Stack implementation
+
+The two stacks are implemented as fixed-capacity ring buffers
+(`t_stack` in `src/stacks.h`):
+rotations and pushes move a `head` index modulo capacity.
+Not a grading criteria
+but avoids costly linked lists
+and copying array elements,
+so it techincally keeps every operation O(1).
+
+### Sorting algorithm
+
+Using 500 random values as a benchmark,
+my goal was to get the number of moves
+as low as possible.
+
+After researching different solutions
+and algorithms
+both for sorting in general
+and push_swap in specific
+I came to an important realization:
+For push_swap,
+only the operations allowed for MOVING
+the data are benchmarked
+everything else does **not** add to the time complexity.
+Traversing the stacks to gain knowledge of them is free,
+precomputing different solutions is free
+and memory for anything besides the input data
+isn't constrained either.
+Thus I chose a **Longest Increasing Subsequence (LIS)** based algorithm
+to leverage this exact strength.
+
+The sorting works as follows
+
+1. Compute the LIS of `a`
+   via O(n²) DP with parent pointers
+   (`src/sort/algo/lis_tabulation.c`).
+1. Elements belonging to the LIS stay on `a` and only get rotated;
+   every other element is pushed to `b`.
+1. Elements are then reinserted from `b` into `a`
+   at their minimum-cost position,
+   where cost is the combined rotations needed on both stacks
+   to align a value with its correct slot.
+1. A final rotation realigns `a`
+   so the smallest element is at the top.
+
 ### References
+
+[1] "Big O Notation," *GeeksforGeeks*. Accessed: Apr. 03, 2026. [Online]. Available: <https://www.geeksforgeeks.org/dsa/analysis-algorithms-big-o-analysis/>
+
+[2] "cxx-pflR1: The Pitchfork Layout (PFL)." Accessed: Mar. 26, 2026. [Online]. Available: <https://joholl.github.io/pitchfork-website/>
+
+[3] J. L. Bentley and M. D. McIlroy, "Engineering a sort function," *Softw Pract Exp*, vol. 23, no. 11, pp. 1249–1265, Nov. 1993, doi: [10.1002/spe.4380231105](https://doi.org/10.1002/spe.4380231105).
+
+[4] "Longest Increasing Subsequence in C," *GeeksforGeeks*. Accessed: Apr. 03, 2026. [Online]. Available: <https://www.geeksforgeeks.org/c/longest-increasing-subsequence-in-c/>
+
+[5] A. Y. Ogun, "Push Swap — A journey to find most efficient sorting algorithm," *Medium*. Accessed: Mar. 25, 2026. [Online]. Available: <https://medium.com/@ayogun/push-swap-c1f5d2d41e97>
+
+[6] U. Gerkens, "Push Swap in less than 4200 operations," *Medium*. Accessed: Apr. 01, 2026. [Online]. Available: <https://medium.com/@ulysse.gks/push-swap-in-less-than-4200-operations-c292f034f6c0>
+
+[7] M. Cerchi, *push_swap*. (Mar. 30, 2026). C. Accessed: Apr. 04, 2026. [Online]. Available: <https://github.com/sisittu99/push_swap>
+
+[8] Y. Deng, "Push_Swap Turk algorithm explained in 6 steps," *Medium*. Accessed: Mar. 25, 2026. [Online]. Available: <https://pure-forest.medium.com/push-swap-turk-algorithm-explained-in-6-steps-4c6650a458c0>
+
+[9] Y. Deng, "Push_Swap Turk algorithm explained in 6 steps," *Medium*. Accessed: Apr. 01, 2026. [Online]. Available: <https://pure-forest.medium.com/push-swap-turk-algorithm-explained-in-6-steps-4c6650a458c0>
+
+[10] "Quicksort," *Wikipedia*. Feb. 28, 2026. Accessed: Apr. 03, 2026. [Online]. Available: <https://en.wikipedia.org/w/index.php?title=Quicksort&oldid=1341007678>
+
+[11] CodeSlate, *Quicksort: How to choose the pivot (Animated!)*, (Jul. 12, 2024). Accessed: Apr. 03, 2026. [Online Video]. Available: <https://www.youtube.com/watch?v=dqNuN6zzYug>
+
+### AI usage
+
+Claude Opus 4.6
+was used for gruntwork tasks, like:
+
+- refactoring (e.g. update argument structures of functions accross files)
+- Edit/correct sections of the readme
+- Convert Zoteros reference formatting to markdown

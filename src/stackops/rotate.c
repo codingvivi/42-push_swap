@@ -23,11 +23,7 @@
  After rotate:
  Array:  [ 1 | 2 | _ | _ | 3 ] head at 2
 */
-static void	rotate(t_stack *s)
-{
-	s->data[from_head(*s, -s->size)] = s->data[s->head];
-	s->head = from_head(*s, -1);
-}
+static void	rotate(t_stack *s);
 
 void	ra(t_stack *stks[2])
 {
@@ -46,4 +42,10 @@ void	rr(t_stack *stks[2])
 	rotate(stks[e_a]);
 	rotate(stks[e_b]);
 	ft_printf("rr\n");
+}
+
+static void	rotate(t_stack *s)
+{
+	s->data[from_head(*s, -s->size)] = s->data[s->head];
+	s->head = from_head(*s, -1);
 }

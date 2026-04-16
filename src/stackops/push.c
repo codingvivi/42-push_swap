@@ -15,16 +15,7 @@
 #include "stacks.h"
 #include <stdbool.h>
 
-static void	push(t_stack *stgt, t_stack *ssrc)
-{
-	if (!ssrc->size)
-		return ;
-	stgt->head = from_head(*stgt, +1);
-	stgt->size++;
-	stgt->data[stgt->head] = ssrc->data[ssrc->head];
-	ssrc->head = from_head(*ssrc, -1);
-	ssrc->size--;
-}
+static void	push(t_stack *stgt, t_stack *ssrc);
 
 void	pa(t_stack *stks[2])
 {
@@ -36,4 +27,15 @@ void	pb(t_stack *stks[2])
 {
 	push(stks[e_b], stks[e_a]);
 	ft_printf("pb\n");
+}
+
+static void	push(t_stack *stgt, t_stack *ssrc)
+{
+	if (!ssrc->size)
+		return ;
+	stgt->head = from_head(*stgt, +1);
+	stgt->size++;
+	stgt->data[stgt->head] = ssrc->data[ssrc->head];
+	ssrc->head = from_head(*ssrc, -1);
+	ssrc->size--;
 }
