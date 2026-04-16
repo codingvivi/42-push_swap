@@ -316,21 +316,25 @@ The sorting works as follows
 
 [3] J. L. Bentley and M. D. McIlroy, "Engineering a sort function," *Softw Pract Exp*, vol. 23, no. 11, pp. 1249–1265, Nov. 1993, doi: [10.1002/spe.4380231105](https://doi.org/10.1002/spe.4380231105).
 
-[4] "Longest Increasing Subsequence in C," *GeeksforGeeks*. Accessed: Apr. 03, 2026. [Online]. Available: <https://www.geeksforgeeks.org/c/longest-increasing-subsequence-in-c/>
+[4] G. Martinez, *gemartin99/Push-Swap-Tester*. (Apr. 14, 2026). Shell. Accessed: Apr. 16, 2026. [Online]. Available: <https://github.com/gemartin99/Push-Swap-Tester>
 
-[5] A. Y. Ogun, "Push Swap — A journey to find most efficient sorting algorithm," *Medium*. Accessed: Mar. 25, 2026. [Online]. Available: <https://medium.com/@ayogun/push-swap-c1f5d2d41e97>
+[5] LeoFu9487, *LeoFu9487/push_swap_tester*. (Feb. 17, 2026). C. Accessed: Apr. 16, 2026. [Online]. Available: <https://github.com/LeoFu9487/push_swap_tester>
 
-[6] U. Gerkens, "Push Swap in less than 4200 operations," *Medium*. Accessed: Apr. 01, 2026. [Online]. Available: <https://medium.com/@ulysse.gks/push-swap-in-less-than-4200-operations-c292f034f6c0>
+[6] "Longest Increasing Subsequence in C," *GeeksforGeeks*. Accessed: Apr. 03, 2026. [Online]. Available: <https://www.geeksforgeeks.org/c/longest-increasing-subsequence-in-c/>
 
-[7] M. Cerchi, *push_swap*. (Mar. 30, 2026). C. Accessed: Apr. 04, 2026. [Online]. Available: <https://github.com/sisittu99/push_swap>
+[7] E. Ruaud, *o-reo/push_swap_visualizer*. (Apr. 09, 2026). C++. Accessed: Apr. 16, 2026. [Online]. Available: <https://github.com/o-reo/push_swap_visualizer>
 
-[8] Y. Deng, "Push_Swap Turk algorithm explained in 6 steps," *Medium*. Accessed: Mar. 25, 2026. [Online]. Available: <https://pure-forest.medium.com/push-swap-turk-algorithm-explained-in-6-steps-4c6650a458c0>
+[8] A. Y. Ogun, "Push Swap — A journey to find most efficient sorting algorithm," *Medium*. Accessed: Mar. 25, 2026. [Online]. Available: <https://medium.com/@ayogun/push-swap-c1f5d2d41e97>
 
-[9] Y. Deng, "Push_Swap Turk algorithm explained in 6 steps," *Medium*. Accessed: Apr. 01, 2026. [Online]. Available: <https://pure-forest.medium.com/push-swap-turk-algorithm-explained-in-6-steps-4c6650a458c0>
+[9] U. Gerkens, "Push Swap in less than 4200 operations," *Medium*. Accessed: Apr. 01, 2026. [Online]. Available: <https://medium.com/@ulysse.gks/push-swap-in-less-than-4200-operations-c292f034f6c0>
 
-[10] "Quicksort," *Wikipedia*. Feb. 28, 2026. Accessed: Apr. 03, 2026. [Online]. Available: <https://en.wikipedia.org/w/index.php?title=Quicksort&oldid=1341007678>
+[10] M. Cerchi, *push_swap*. (Mar. 30, 2026). C. Accessed: Apr. 04, 2026. [Online]. Available: <https://github.com/sisittu99/push_swap>
 
-[11] CodeSlate, *Quicksort: How to choose the pivot (Animated!)*, (Jul. 12, 2024). Accessed: Apr. 03, 2026. [Online Video]. Available: <https://www.youtube.com/watch?v=dqNuN6zzYug>
+[11] Y. Deng, "Push_Swap Turk algorithm explained in 6 steps," *Medium*. Accessed: Apr. 01, 2026. [Online]. Available: <https://pure-forest.medium.com/push-swap-turk-algorithm-explained-in-6-steps-4c6650a458c0>
+
+[12] "Quicksort," *Wikipedia*. Feb. 28, 2026. Accessed: Apr. 03, 2026. [Online]. Available: <https://en.wikipedia.org/w/index.php?title=Quicksort&oldid=1341007678>
+
+[13] CodeSlate, *Quicksort: How to choose the pivot (Animated!)*, (Jul. 12, 2024). Accessed: Apr. 03, 2026. [Online Video]. Available: <https://www.youtube.com/watch?v=dqNuN6zzYug>
 
 ### AI usage
 
