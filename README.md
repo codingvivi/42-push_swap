@@ -8,11 +8,11 @@ My submission for 42's push swap project!
 
 The rules:
 read a sequence of unordered,
-non duplicate integers
+non-duplicate integers
 via cli input,
 return them sorted
 using two stacks (`a` and `b`)
-fixed set of operations,
+and a fixed set of operations,
 aiming for the **shortest possible sequence** of
 moves.
 
@@ -48,13 +48,14 @@ for development:
 src/
 ├── main.c
 ├── stacks.h            # shared ring-buffer stack type
+├── free/               # allocation helpers
 ├── init/               # argument parsing + stack construction
 ├── stackops/           # the 11 push_swap operations + index helpers
-└── sort/               # sorting strategy, LIS, cost/move selection
+└── sort/               # sorting strategy
+    ├── algo/           # all of the algorithm's individual steps
+    └── helper/         # helpers shared across multiple algo steps
 external/libs/libft/    # libft submodule
 docs/42/                # subject + norm PDFs
-tools/                  # helper scripts
-test/                   # nushell-driven test runner (vv_tester.nu)
 ```
 
 Headers live next to the `.c` files that define them —
@@ -62,17 +63,24 @@ per the Pitchfork convention,
 `include/` is reserved for public-API headers of libraries,
 and `push_swap` is an executable.
 
+### Getting the repo
+
+```bash
+git clone --recursive git@github.com:codingvivi/42-push_swap.git
+# or, if already cloned without --recursive:
+git submodule update --init --recursive
+```
+
 ### Dependencies
 
 - `cc` (gcc or clang) and GNU `make`
-- The `libft` submodule at `external/libs/libft`.
-  Clone with `--recursive`,
-  or run `git submodule update --init` after cloning.
+- The `libft` submodule at `external/libs/libft` (pulled in by the clone above)
 
 *Optionally:*
 
 - `just` to wrap/orchestrate useful commands
-- `visualizer name` to visualize what push swap is doing
+- [`push_swap_visualizer`](https://github.com/o-reo/push_swap_visualizer) by o-reo
+  to visualize what push_swap is doing
 
 ### Building & running
 
@@ -90,7 +98,7 @@ just build             # == bear -- make
 just run ARGS...       # run the compiled binary
 just brun BARGS RARGS  # build, then run
 just crun BARGS RARGS  # make clean, then brun
-just hrun BARGS RARGS  # make hclean, then brun
+just rerun ARGS...     # make re, then run
 ```
 
 Run manually:
@@ -119,27 +127,112 @@ just run 0 one 2 3
 - Arguments can be passed as separate `argv` entries,
   or as a single quoted whitespace-separated string
   (e.g. `"4 67 3 87 23"`).
+- In dev builds, passing `-v` or `--verbose`
+  as the **first** argument
+  prints intermediate cost tables and sort state for debugging.
+  The flag is compiled out of turn-in builds
+  (where `-DNDEBUG` is set).
 
-Validate with a checker:
+Validate with a checker
+(run `make tester` first to stage `checker_linux` into `build/tester/`):
 
 ```bash
 ARG="4 67 3 87 23"
-./build/bin/src/push_swap $ARG | ./checker_linux $ARG
+./build/bin/src/push_swap $ARG | ./build/tester/checker_linux $ARG
 # OK
 ```
 
 ### Developing & Evaluating
 
-#### Generating a sane repo directory
-
 #### Turn-in build
 
-The Makefile produces both from a single source of truth:
+To generate a folder that has the exact submission specifications
+run:
 
 ```bash
-make stage                        # flat tree → build/dist/push_swap_turnin_/
+make stage                        # → build/dist/push_swap_turnin_/
+```
+
+The resulting folder contains only the allowed files
+and matches the folder structure required by the project guidelines.
+Per those same guidelines
+only integer arguments are allowed,
+so `-v` / `--verbose` would be non-conformant —
+the turn-in build compiles with `-DNDEBUG`
+to strip the flag out entirely,
+keeping it strictly a dev-time debugging aid.
+
+To generate that folder plus a tarball
+(handy to send to the school computer/
+use as a github release)
+run
+
+```bash
 RELEASE_TAG=v1 make dist          # → push_swap_turnin_v1.tar.gz
 ```
+
+#### (Re)generating a sane repo directory
+
+The strictest interpretation of the instructions for push_swap
+and libft
+requires flat folder structures for both projects as follows:
+
+```
+root/
+├── *.c                 # push_swap sources
+├── *.h                 # push_swap headers
+├── Makefile
+├── README.md
+└── libft/
+    ├── *.c             # libft sources
+    ├── *.h             # libft headers
+    ├── Makefile
+    └── README.md
+```
+
+Furthermore,
+the final build result for either project
+should be placed in the respective project's root directory.
+
+To conform to this requirement
+while still making things easy on the evaluators
+(and developer)
+`make stage` will generate the folder structure as described above
+into `build/dist/push_swap_turnin_/`.
+
+The switch between "turn-in" and "dev" behavior is driven by a
+single Makefile variable:
+
+```make
+TURNIN_RUN = true
+```
+
+`make stage` prepends that line to the Makefile it copies into the
+staged tree,
+so the staged Makefile knows it's running in turn-in mode.
+In dev mode the variable is unset and the same targets are no-ops
+on the project layout.
+
+Inside the staged (flat) tree,
+the workflow is:
+
+```bash
+make            # unflattens *.c / *.h into src/ and
+                # libft/ into external/libs/libft/, then builds
+make init       # same unflatten step, without compiling
+make fclean     # cleans build artifacts AND re-flattens the tree
+                # back to exactly what was shipped
+```
+
+The default `all` target depends on `init`,
+so a plain `make` in the staged tree always unflattens first —
+one source of truth for the nested layout.
+
+In the dev tree (where `TURNIN_RUN` is unset),
+`make fclean` only removes build artifacts —
+it does *not* restructure the push_swap src layout.
+(libft's own fclean does flatten its tree,
+but the next `make` re-nests it transparently via `make init`.)
 
 #### Testing
 
@@ -163,7 +256,7 @@ just test-yfu-loop SIZE COUNT # yfu's loop.sh (defaults: 100 10)
 
 ```bash
 make visualizer              # builds external/tools/push_swap_visualizer
-just visualize-deps          # install build deps (zypper, openSUSE)
+just visualize-deps-tw       # install build deps (zypper, openSUSE Tumbleweed)
 just visualize ARGS...       # make visualizer, then run it with ARGS
 ```
 
@@ -177,7 +270,7 @@ rotations and pushes move a `head` index modulo capacity.
 Not a grading criteria
 but avoids costly linked lists
 and copying array elements,
-so it techincally keeps every operation O(1).
+so it technically keeps every operation O(1).
 
 ### Sorting algorithm
 
@@ -241,7 +334,7 @@ The sorting works as follows
 
 ### AI usage
 
-Claude Opus 4.6
+Claude Opus 4.7
 was used for gruntwork tasks, like:
 
 - refactoring (e.g. update argument structures of functions accross files)

@@ -198,9 +198,8 @@ clean:
 
 # remove all build artifacts (and unflatten in turnin)
 fclean: clean
-	$(RM) $(BIN_DIR)
+	$(RM) $(BUILD_DIR)
 	$(RM) $(NAME)
-	$(RM) $(DIST_DIR)
 	-$(MAKE) -C $(LIBFT_DIR) fclean
 ifeq ($(TURNIN_RUN),true)
 	-find $(SRC_DIR) -type f -name '*.c' -exec mv {} . \;

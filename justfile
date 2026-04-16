@@ -25,19 +25,19 @@ brun bargs="" rargs="":
     just build {{bargs}}
     just run {{rargs}}
 
-crun bargs="" rargs="":                                                                                     
+crun bargs="" rargs="":
       make clean
-      just brun "{{bargs}}" "{{rargs}}"             
+      just brun "{{bargs}}" "{{rargs}}"
 
-hrun bargs="" rargs="":
-    make hclean
-    just brun "{{bargs}}" "{{rargs}}"
+rerun *args:
+    make re
+    just run {{args}}
 
 visualize *args:
     make visualizer
     external/tools/push_swap_visualizer/build/bin/visualizer {{args}}
 
-visualize-deps:
+visualize-deps-tw:
     sudo zypper install \
         cmake \
         gcc-c++ \
