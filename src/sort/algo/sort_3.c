@@ -1,27 +1,56 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort.c                                             :+:      :+:    :+:   */
+/*   sort_3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/01 19:07:54 by lrain             #+#    #+#             */
+/*   Created: 2026/04/17 16:00:00 by lrain             #+#    #+#             */
 /*   Updated: 2026/04/17 16:00:00 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sort.h"
+#include "get_final_idxs.h"
+#include "reverse_rotate.h"
+#include "rotate.h"
 #include "sort_3.h"
-#include "sort_4or5.h"
-#include "sort_n.h"
 #include "stacks.h"
+#include "swap.h"
 #include <stdbool.h>
+#include <stddef.h>
 
-bool	sort(t_stack *stks[2], bool verbose)
+static void	algo_3(t_stack *stks[2], size_t top, size_t mid, size_t bot)
 {
-	if (stks[e_a]->size == 3)
-		return (sort_3(stks));
-	if (stks[e_a]->size == 4 || stks[e_a]->size == 5)
-		return (sort_4or5(stks));
-	return (sort_n(stks, verbose));
+	if (top > mid && top > bot)
+	{
+		if (mid < bot)
+			ra(stks);
+		else
+		{
+			ra(stks);
+			sa(stks);
+		}
+	}
+	else if (mid > bot)
+	{
+		if (top < bot)
+		{
+			sa(stks);
+			ra(stks);
+		}
+		else
+			rra(stks);
+	}
+	else if (top > mid)
+		sa(stks);
+}
+
+bool	sort_3(t_stack *stks[2])
+{
+	const size_t	*final_idxs = get_final_idxs(stks[e_a]);
+
+	if (!final_idxs)
+		return (false);
+	algo_3(stks, final_idxs[0], final_idxs[1], final_idxs[2]);
+	return (true);
 }

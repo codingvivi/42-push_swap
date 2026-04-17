@@ -50,7 +50,8 @@ INCLUDES = -I./$(SRC_DIR) \
            -I./$(SRC_DIR)/init \
            -I./$(SRC_DIR)/sort \
            -I./$(SRC_DIR)/sort/algo \
-           -I./$(SRC_DIR)/sort/helper \
+           -I./$(SRC_DIR)/sort/algo/n_algo \
+           -I./$(SRC_DIR)/sort/helpers \
            -I./$(SRC_DIR)/stackops \
            -I$(LIBFT_INCLUDE_DIR)
 
@@ -69,15 +70,19 @@ FILES = main \
         stackops/reverse_rotate \
         stackops/swap \
         sort/sort \
-        sort/algo/push_non_lis \
-        sort/algo/lis_tabulation \
-        sort/helper/cost_ops \
-        sort/helper/pickop \
-        sort/helper/value_fetchers \
-        sort/helper/idx_of_min \
-        sort/helper/prepend \
-        sort/algo/sort_into_a \
-        sort/algo/min_to_top
+        sort/algo/sort_3 \
+        sort/algo/sort_4or5 \
+        sort/algo/sort_n \
+        sort/algo/n_algo/push_non_lis \
+        sort/algo/n_algo/lis_tabulation \
+        sort/algo/n_algo/sort_into_a \
+        sort/algo/n_algo/min_to_top \
+        sort/helpers/cost_ops \
+        sort/helpers/pickop \
+        sort/helpers/value_fetchers \
+        sort/helpers/idx_of_min \
+        sort/helpers/prepend \
+        sort/helpers/get_final_idxs
 
 HEADERS = stacks \
           free/freearr \
@@ -93,15 +98,19 @@ HEADERS = stacks \
           stackops/reverse_rotate \
           stackops/swap \
           sort/sort \
-          sort/algo/push_non_lis \
-          sort/algo/lis_tabulation \
-          sort/helper/cost_ops \
-          sort/helper/pickop \
-          sort/helper/value_fetchers \
-          sort/helper/idx_of_min \
-          sort/helper/prepend \
-          sort/algo/sort_into_a \
-          sort/algo/min_to_top
+          sort/algo/sort_3 \
+          sort/algo/sort_4or5 \
+          sort/algo/sort_n \
+          sort/algo/n_algo/push_non_lis \
+          sort/algo/n_algo/lis_tabulation \
+          sort/algo/n_algo/sort_into_a \
+          sort/algo/n_algo/min_to_top \
+          sort/helpers/cost_ops \
+          sort/helpers/pickop \
+          sort/helpers/value_fetchers \
+          sort/helpers/idx_of_min \
+          sort/helpers/prepend \
+          sort/helpers/get_final_idxs
 
 SRCS = $(FILES:%=$(SRC_DIR)/%.c)
 HDRS = $(HEADERS:%=$(SRC_DIR)/%.h)

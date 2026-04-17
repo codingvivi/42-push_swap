@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort.c                                             :+:      :+:    :+:   */
+/*   sort_n.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/01 19:07:54 by lrain             #+#    #+#             */
+/*   Created: 2026/04/17 16:00:00 by lrain             #+#    #+#             */
 /*   Updated: 2026/04/17 16:00:00 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sort.h"
-#include "sort_3.h"
-#include "sort_4or5.h"
-#include "sort_n.h"
-#include "stacks.h"
-#include <stdbool.h>
+#ifndef SORT_N_H
+# define SORT_N_H
 
-bool	sort(t_stack *stks[2], bool verbose)
-{
-	if (stks[e_a]->size == 3)
-		return (sort_3(stks));
-	if (stks[e_a]->size == 4 || stks[e_a]->size == 5)
-		return (sort_4or5(stks));
-	return (sort_n(stks, verbose));
-}
+# include "stacks.h"
+# include <stdbool.h>
+
+bool	sort_n(t_stack *stks[2], bool verbose);
+
+#endif

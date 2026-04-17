@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort.c                                             :+:      :+:    :+:   */
+/*   get_final_idxs.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/01 19:07:54 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/17 16:00:00 by lrain            ###   ########.fr       */
+/*   Created: 2026/04/17 13:26:34 by lrain             #+#    #+#             */
+/*   Updated: 2026/04/17 15:00:00 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sort.h"
-#include "sort_3.h"
-#include "sort_4or5.h"
-#include "sort_n.h"
-#include "stacks.h"
-#include <stdbool.h>
+#ifndef GET_FINAL_IDXS_H
+# define GET_FINAL_IDXS_H
 
-bool	sort(t_stack *stks[2], bool verbose)
-{
-	if (stks[e_a]->size == 3)
-		return (sort_3(stks));
-	if (stks[e_a]->size == 4 || stks[e_a]->size == 5)
-		return (sort_4or5(stks));
-	return (sort_n(stks, verbose));
-}
+# include "stacks.h"
+# include <stddef.h>
+
+size_t	*get_final_idxs(const t_stack *a);
+
+#endif
