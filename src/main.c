@@ -40,7 +40,10 @@ int	main(int argc, char **argv)
 	if (verbose)
 		print_stacks(stacks);
 	if (issorted(stacks[e_a]))
+	{
+		free_stacks(stacks);
 		return (0);
+	}
 	if (!sort(stacks, verbose))
 	{
 		free_stacks(stacks);

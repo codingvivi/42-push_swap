@@ -6,7 +6,7 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 16:00:00 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/17 16:00:00 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/17 17:15:48 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "swap.h"
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdlib.h>
 
 static void	algo_3(t_stack *stks[2], size_t top, size_t mid, size_t bot)
 {
@@ -52,5 +53,6 @@ bool	sort_3(t_stack *stks[2])
 	if (!final_idxs)
 		return (false);
 	algo_3(stks, final_idxs[0], final_idxs[1], final_idxs[2]);
+	free((void *)final_idxs);
 	return (true);
 }
