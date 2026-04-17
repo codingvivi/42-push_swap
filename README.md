@@ -80,6 +80,7 @@ git submodule update --init --recursive
 *Optionally:*
 
 - `just` to wrap/orchestrate useful commands
+- `bear` for compile commands
 - [`push_swap_visualizer`](https://github.com/o-reo/push_swap_visualizer) by o-reo
   to visualize what push_swap is doing
 
@@ -303,13 +304,13 @@ The sorting works as follows
 1. Compute the LIS of `a`
    via O(n²) DP with parent pointers
    (`src/sort/algo/n_algo/lis_tabulation.c`).
-2. Elements belonging to the LIS stay on `a` and only get rotated;
+1. Elements belonging to the LIS stay on `a` and only get rotated;
    every other element is pushed to `b`.
-3. Elements are then reinserted from `b` into `a`
+1. Elements are then reinserted from `b` into `a`
    at their minimum-cost position,
    where cost is the combined rotations needed on both stacks
    to align a value with its correct slot.
-4. A final rotation realigns `a`
+1. A final rotation realigns `a`
    so the smallest element is at the top.
 
 #### 3-5 numbers
@@ -325,7 +326,7 @@ number of moves.
 
 For n=3 the program therefore calculates the target index of each input number
 and then applies the optimal set of moves for any n = 3 permutation.
-For 3 < n <= 5,
+For 3 < n \<= 5,
 it pushes the smallest number(s) onto stack b,
 before running the 3 sort
 and merging b back into a.
