@@ -193,7 +193,8 @@ stage: | $(DIST_DIR)
 	cp Makefile README.md $(DIST_DIR)/$(RELEASE_BASE)/
 	cp $$(find $(SRC_DIR) -type f \( -name '*.c' -o -name '*.h' \)) $(DIST_DIR)/$(RELEASE_BASE)/
 	sed -i '1i TURNIN_RUN = true' $(DIST_DIR)/$(RELEASE_BASE)/Makefile
-	cp -r $(LIBFT_DIR) $(DIST_DIR)/$(RELEASE_BASE)/libft
+	$(MAKE) -C $(LIBFT_DIR) stage RELEASE_TAG=$(RELEASE_TAG)
+	cp -r $(LIBFT_DIR)/build/dist/libft_turnin_$(RELEASE_TAG) $(DIST_DIR)/$(RELEASE_BASE)/libft
 
 # create a distribution tarball with the submission files
 dist: stage
