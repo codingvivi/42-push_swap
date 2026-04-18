@@ -2,6 +2,8 @@ _This project has been created as part of the 42 curriculum by lrain_
 
 # push_swap
 
+![](data/get-rotated.gif)
+
 ## Description
 
 My submission for 42's push swap project!
@@ -173,6 +175,26 @@ run
 RELEASE_TAG=v1 make dist          # → push_swap_turnin_v1.tar.gz
 ```
 
+The `just` wrappers run pre-flight checks before packaging:
+
+```bash
+just dist RELEASE_TAG=v1          # rebuild + norminette, then make dist
+just dist-safe RELEASE_TAG=v1     # rebuild + norminette + full tester, then make dist
+```
+
+Run the checks standalone:
+
+```bash
+just checks-dist                  # rebuild + norminette
+just checks-dist-full             # rebuild + norminette + full tester
+```
+
+To package, tag, push, and cut a GitHub release in one go:
+
+```bash
+just publish v1 "release notes"   # make dist + git tag + push + gh release create
+```
+
 #### (Re)generating a sane repo directory
 
 The strictest interpretation of the instructions for push_swap
@@ -252,6 +274,7 @@ make tester-yfu      # stage + build + stage yfu's tester in build/tester-yfu/
 just test                     # push_swap_tester (push_swap_test_linux.sh)
 just test-yfu                 # yfu's basic_test.sh
 just test-yfu-loop SIZE COUNT # yfu's loop.sh (defaults: 100 10)
+just test-norm                # run norminette across src/
 ```
 
 #### Visualizer

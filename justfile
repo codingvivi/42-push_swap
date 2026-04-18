@@ -52,6 +52,14 @@ rerun *args:
 # dist
 # =============================================================================
 
+# package a release tarball tagged with the given version
+[group('dist')]
+publish tag msg:
+    RELEASE_TAG={{tag}} make dist
+    git tag {{tag}} -m {{msg}}
+    git push origin HEAD:main --tags
+    gh release create {{tag}} build/dist/{{name}}_turnin_{{tag}}.tar.gz
+
 # full checks (norm + rebuild + tests) then package tarball
 [group('dist')]
 dist-safe *args:
