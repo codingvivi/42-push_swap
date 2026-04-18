@@ -1,6 +1,7 @@
 NAME = push_swap
 
 .DEFAULT_GOAL := all
+# used for make init
 .SECONDEXPANSION:
 
 CC         = cc
@@ -13,6 +14,7 @@ RM = rm -rf
 
 RELEASE_TAG  ?=
 RELEASE_NAME = push_swap_turnin_$(RELEASE_TAG).tar.gz
+#strip tar and gz
 RELEASE_BASE = $(basename $(basename $(RELEASE_NAME)))
 
 # code
@@ -55,7 +57,7 @@ INCLUDES = -I./$(SRC_DIR) \
            -I./$(SRC_DIR)/stackops \
            -I$(LIBFT_INCLUDE_DIR)
 
-# nested layout - single source of truth for both dev and turnin
+# nested layout, single source of truth for both dev and turnin
 FILES = main \
         free/freearr \
         free/freecharr \
@@ -81,7 +83,6 @@ FILES = main \
         sort/helpers/pickop \
         sort/helpers/value_fetchers \
         sort/helpers/idx_of_min \
-        sort/helpers/prepend \
         sort/helpers/get_final_idxs
 
 HEADERS = stacks \
@@ -109,7 +110,6 @@ HEADERS = stacks \
           sort/helpers/pickop \
           sort/helpers/value_fetchers \
           sort/helpers/idx_of_min \
-          sort/helpers/prepend \
           sort/helpers/get_final_idxs
 
 SRCS = $(FILES:%=$(SRC_DIR)/%.c)
@@ -131,8 +131,13 @@ $(SRC_OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(SRC_OBJ_DIR)
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-# (turnin only) move flat sources/headers from root to nested src/
-# secondary expansion: for target src/foo/bar.c, prereq becomes bar.c (root)
+# move flat sources/headers from root to nested src/
+# secondary expansion:
+# only one $ gets consumed during parse time
+# thus expansion of $$ gets deferred to build time
+# instead of running notdir on a literal %
+# it gets run on the target known at buildtime
+# for target src/foo/bar.c, prereq becomes bar.c (root)
 $(SRC_DIR)/%.c: $$(notdir %).c
 	@mkdir -p $(@D)
 	mv $< $@
@@ -141,7 +146,10 @@ $(SRC_DIR)/%.h: $$(notdir %).h
 	@mkdir -p $(@D)
 	mv $< $@
 
-# (turnin only) move libft from root into external/libs/ if it exists
+# wildcard returns empty if no match
+# if wildcard return isnt equal to empty
+# thus if libft exists in root,
+# move libft from root into external/libs/ 
 ifneq ($(wildcard libft),)
 $(LIBFT_DIR): libft | $(EXTERNAL_DIR)
 	mkdir -p $(EXTERNAL_DIR)/libs
@@ -151,15 +159,6 @@ endif
 # build libft
 $(LIBFT): | $(LIBFT_DIR)
 	$(MAKE) -C $(LIBFT_DIR)
-
-# build visualizer (opt-in, not part of `all`)
-visualizer: $(VISUALIZER)
-
-$(VISUALIZER):
-	cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
-		-DCMAKE_CXX_FLAGS="-Wno-error=ignored-attributes" \
-		-S $(VISUALIZER_DIR) -B $(VISUALIZER_BUILD_DIR)
-	$(MAKE) -C $(VISUALIZER_BUILD_DIR)
 
 # create source obj directory
 $(SRC_OBJ_DIR): | $(BUILD_DIR)
@@ -182,8 +181,8 @@ $(DIST_DIR): | $(BUILD_DIR)
 	mkdir -p $(DIST_DIR)
 
 # initialize project structure:
-#   - unflattens our own src tree in turnin (via secondary-expansion pattern rules)
-#   - re-nests libft if its fclean has flattened it, so compiles can find libft.h
+#   - unflattens src tree in turnin 
+#   - re-nests libft if its fclean has flattened it
 init: $(SRCS) $(HDRS) | $(LIBFT_DIR)
 	$(MAKE) -C $(LIBFT_DIR) init
 
@@ -221,6 +220,15 @@ endif
 # full rebuild
 re: fclean all
 
+# build visualizer 
+visualizer: $(VISUALIZER)
+
+$(VISUALIZER):
+	cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+		-DCMAKE_CXX_FLAGS="-Wno-error=ignored-attributes" \
+		-S $(VISUALIZER_DIR) -B $(VISUALIZER_BUILD_DIR)
+	$(MAKE) -C $(VISUALIZER_BUILD_DIR)
+
 # build tester: stage, compile in dist, copy tester files
 tester: stage
 	$(MAKE) -C $(DIST_DIR)/$(RELEASE_BASE)
@@ -232,8 +240,9 @@ tester: stage
 	chmod +x $(TESTER_BUILD_DIR)/push_swap_test_linux.sh $(TESTER_BUILD_DIR)/push_swap_test.sh
 
 # build yfu tester: stage, compile in dist, stage tester dir with binary one level up
-# yfu scripts hardcode ROOT=.. and call `make -C $ROOT`, so we place push_swap and a
-# no-op Makefile in tester-yfu/ and copy the submodule contents into tester-yfu/tester/.
+# yfu scripts hardcode ROOT=.. and call `make -C $ROOT`,
+# place push_swap and a no-op Makefile in tester-yfu/
+# and copy the submodule contents into tester-yfu/tester/.
 tester-yfu: stage
 	$(MAKE) -C $(DIST_DIR)/$(RELEASE_BASE)
 	$(RM) $(TESTER_YFU_BUILD_DIR)

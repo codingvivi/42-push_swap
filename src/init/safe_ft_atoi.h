@@ -10,6 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdbool.h>
+#ifndef SAFE_FT_ATOI_H
+# define SAFE_FT_ATOI_H
+
+# include <stdbool.h>
 
 bool	safe_ft_atoi(const char *str, int *nb);
+
+#endif

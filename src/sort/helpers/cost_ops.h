@@ -10,9 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stacks.h"
-#include <stdbool.h>
-#include <sys/types.h>
+#ifndef COST_OPS_H
+# define COST_OPS_H
+
+# include "stacks.h"
+# include <stdbool.h>
+# include <sys/types.h>
 
 ssize_t	get_rotate_cost(size_t tgt_idx, size_t size);
 ssize_t	**generate_costs(t_stack *stks[2], bool verbose);
+
+#endif

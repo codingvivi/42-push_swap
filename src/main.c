@@ -6,7 +6,7 @@
 /*   By: lrain <lrain@students.42berlin.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 17:26:20 by lrain             #+#    #+#             */
-/*   Updated: 2026/04/12 02:54:06 by lrain            ###   ########.fr       */
+/*   Updated: 2026/04/18 15:33:29 by lrain            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,11 @@ static bool	issorted(t_stack *a);
 
 int	main(int argc, char **argv)
 {
-	size_t	stack_size;
-	t_stack	*stacks[2];
-	bool	verbose;
+	const size_t	stack_size = argc - 1;
+	t_stack			*stacks[2];
+	bool			verbose;
 
 	verbose = false;
-	stack_size = argc - 1;
 	if (argc < 2)
 		return (end_w_err());
 	if (!init_ab(stack_size, stacks))

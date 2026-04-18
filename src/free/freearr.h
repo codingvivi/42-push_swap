@@ -10,8 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#ifndef FREEARR_H
+# define FREEARR_H
+
+# include <stddef.h>
 
 typedef void	(*t_free_membr_fn)(void *args);
 
 void			freearr(void **arr, size_t len, t_free_membr_fn freefn);
+
+#endif

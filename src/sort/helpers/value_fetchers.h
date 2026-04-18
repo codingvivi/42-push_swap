@@ -10,10 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/types.h>
+#ifndef VALUE_FETCHERS_H
+# define VALUE_FETCHERS_H
+
+# include <sys/types.h>
 
 ssize_t	ps_abs(ssize_t nb);
 
 ssize_t	max(ssize_t x, ssize_t y);
 
 ssize_t	min(ssize_t x, ssize_t y);
+
+#endif

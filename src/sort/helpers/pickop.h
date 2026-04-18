@@ -10,8 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stacks.h"
-#include <sys/types.h>
+#ifndef PICKOP_H
+# define PICKOP_H
+
+# include "stacks.h"
+# include <sys/types.h>
 
 typedef void	(*t_op)(t_stack *[2]);
 
@@ -20,3 +23,5 @@ t_op			pick_b(ssize_t n);
 t_op			pick_a(ssize_t n);
 
 t_op			pick_both(ssize_t n);
+
+#endif

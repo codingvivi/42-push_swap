@@ -92,6 +92,11 @@ static bool	parse_args(int argc, char **argv, t_stack *a, bool *verbose)
 		usr_in = (argv + 1);
 	if (!usr_in)
 		return (false);
+	if (argc == 2 && !usr_in[0])
+	{
+		freecharr(usr_in);
+		return (false);
+	}
 	return (write_args(usr_in, a, argc));
 }
 

@@ -10,7 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stacks.h"
-#include <stdbool.h>
+#ifndef SORT_H
+# define SORT_H
+
+# include "stacks.h"
+# include <stdbool.h>
 
 bool	sort(t_stack *stacks[2], bool verbose);
+
+#endif

@@ -10,6 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stacks.h"
+#ifndef IDX_OF_MIN_H
+# define IDX_OF_MIN_H
+
+# include "stacks.h"
 
 size_t	idx_of_min(t_stack s);
+
+#endif

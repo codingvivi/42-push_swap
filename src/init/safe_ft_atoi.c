@@ -57,10 +57,12 @@ static bool	safe_converter(const char **sp, int **np, const int neg)
 			return (false);
 		**np = (10 * (**np)) - (*(*sp)++ - '0');
 	}
-	if (!neg)
-		**np *= -1;
 	if (!has_digit)
 		return (false);
+	if (!neg && **np == INT_MIN)
+		return (false);
+	if (!neg)
+		**np *= -1;
 	if (!ft_isspace(**sp) && **sp != '\0')
 		return (false);
 	return (true);

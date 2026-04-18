@@ -53,4 +53,10 @@ typedef struct s_idx_cost
 	size_t	idx;
 	ssize_t	cost;
 }			t_idx_cost;
+
+typedef struct s_idx_len
+{
+	size_t	idx;
+	size_t	len;
+}			t_idx_len;
 #endif

@@ -10,4 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef FREECHARR_H
+# define FREECHARR_H
+
 void	freecharr(char **arr);
+
+#endif
