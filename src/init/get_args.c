@@ -49,7 +49,6 @@ static void	parse_verbose(int *argc, char ***argv, t_stack *a, bool *verbose)
 		*verbose = true;
 		(*argv)++;
 		(*argc)--;
-		a->cap--;
 	}
 }
 
